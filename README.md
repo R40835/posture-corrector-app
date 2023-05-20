@@ -39,7 +39,7 @@ python manage.py runserver <host-address>:5000
 4. In monitor.py set the url to the IP address where your hosting your Django app.
 5. Run the monitor.py script and authenticate to your account created on the Django app.
 <img
-  src="![Monitoring device](https://github.com/R40835/Posture-Corrector-App/assets/100576473/a53deb70-27fa-4998-a5e2-9664065aba78)"
+  src="https://github.com/R40835/Posture-Corrector-App/assets/100576473/a53deb70-27fa-4998-a5e2-9664065aba78"
   alt="Alt text"
   title="Optional title"
   style="display: inline-block; margin: 0 auto; max-width: 300px">
