@@ -12,7 +12,10 @@ The Posture Corrector App is a computer vision-based application developed using
 - Photos of incorrect postures sustained throughout the monitoring video.
 
 # Django App Setup Instructions
-1. Install the necessary dependencies and libraries listed in the requirements.txt file.
+1. Install the necessary dependencies and libraries listed in the requirements.txt file using the following command:
+```
+pip install -r requirements.txt
+```
 2. Create a postgres database and link it to the app in settings.py.
 3. Pass your IP address to the allowed_hosts in settings.py.
 4. Make migrations using the following command: 
