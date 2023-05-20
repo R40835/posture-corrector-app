@@ -15,10 +15,13 @@ The Posture Corrector App is a computer vision-based application developed using
 1. Install the necessary dependencies and libraries listed in the requirements.txt file.
 2. Create a postgres database and link it to the app in settings.py.
 3. Pass your IP address to the allowed_hosts in settings.py.
-4. Make migrations using the following command: '''python manage.py makemigrations'''
-5. Migrate using the following command: '''python manage.py migrate'''
-6. Run the server using the following command: '''python manage.py runserver <host-address>:5000'''
-7. Access the web app through a browser to monitor posture, view statistics, and provide feedback.
+4. Make migrations using the following command: 
+'''
+python manage.py makemigrations
+'''
+6. Migrate using the following command: '''python manage.py migrate'''
+7. Run the server using the following command: '''python manage.py runserver <host-address>:5000'''
+8. Access the web app through a browser to monitor posture, view statistics, and provide feedback.
   
 # Jetson Nano setup
 1. Write the image into a SDcard following the instruction from nvidia website https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#setup.
