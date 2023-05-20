@@ -1,0 +1,26 @@
+{% extends "main/base.html" %}
+{% block content %}    
+<!-- Main content -->
+<div class="container mt-4">
+    <div class="text-center">
+        <h1>Welcome {{ user.first_name }}</h1>
+    </div>
+    <hr>
+    <h1>Following is some guidance and tips on the app's usage</h1>
+    <hr>
+    <br>
+    <p>The Sitting Posture App helps you improve your posture by monitoring your sitting position and providing real-time feedback. Here's how it works:</p>
+    <ol>
+      <li>The app is connected to a Jetson Nano, which uses its camera to monitor your sitting posture.</li>
+      <li>You'll need to authenticate with the Jetson Nano to start monitoring your posture.</li>
+      <li>The app detects incorrect postures (Back Forward, Back Reclined, Neck Forward) in segements of 10 seconds.</li>
+      <li>The app will send you a notification in real-time if it detects that you're slouching or adopting a poor posture.</li>
+      <li>You can then adjust your posture as needed to maintain good sitting posture and avoid discomfort or pain.</li>
+    </ol>
+    
+    <div class="alert alert-info mt-4" role="alert">
+      <p><strong>Note:</strong> In order to use this app, you'll need a Jetson Nano with a camera connected to it. Make sure to authenticate with the Jetson Nano before using the app to monitor your posture.</p>
+    </div>
+  </div>
+  
+{% endblock %}

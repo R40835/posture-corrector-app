@@ -1,0 +1,40 @@
+{% extends "main/base.html" %}
+{% block content %}
+{% if videos %}
+<br><br>
+<div class="text-center">
+    <h1>Videos Found:</h1>
+</div><br>
+    <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>#</th>  
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Total Alerts</th>
+            <th>Incorrect Postures</th>
+            <th>Posture Score</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for video in videos %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ video.start_time }}</td>
+              <td>{{ video.end_time }}</td>
+              <td>{{ video.total_alerts }}</td>
+              <td>{{ video.incorrect_postures }}</td>
+              <td>{{ video.posture_score }}</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+      </table>
+{% else %}
+      <div class="text-center">
+            <div class="alert alert-danger mt-4 d-inline-block" role="alert" style="max-width: 500px;">
+                <p>No videos found for the selected date.</p>
+            </div>
+        </div>
+{% endif %}
+{% endblock %}

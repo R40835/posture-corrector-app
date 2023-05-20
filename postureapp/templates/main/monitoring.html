@@ -1,0 +1,111 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- HTML these are the latest version of working notifications-->
+<br><br>
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+            <div class="text-center">
+                <div class="card-header"><strong>Getting Started</strong></div>
+            </div>
+          <div class="card-body">
+            <p class="mb-4">To get started, follow these steps:</p>
+            <ol>
+              <li>Boot the Jetson Nano.</li>
+              <li>Start the application.</li>
+              <li>Enter your email address and password.</li>
+              <li>Choose the angle to be monitored on.</li>
+              <li>
+                    That's it! You are good to go. Once done monitoring your posture you can get back to your profile and see your stats.
+                <a class="icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 25, 135, 84;" href="{% url 'main:profile' %}">
+                    Profile 
+                    <svg class="bi" aria-hidden="true"><use xlink:href="#arrow-right"></use></svg>
+                </a>
+              </li>
+            </ol>
+            <div class="alert alert-warning mt-4" role="alert">
+                <p><strong>Note:</strong> Please stay on this page while under surveillance, this is where your alerts will pop up.</p>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+<p>
+    <div class="text-center">
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+            Total back and neck alerts count
+            </button>
+    </div>
+
+</p>
+<div style="min-height: 120px;">
+<div class="collapse collapse-horizontal" id="collapseWidthExample">
+<div class="card card-body" style="width: 300px;">
+    <div>
+        <span id="back-alerts">0</span> alerts for your back
+    </div>
+    <div>
+        <span id="neck-alerts">0</span> alerts for your neck
+    </div>
+</div>
+</div>
+</div>
+
+<!-- Audio -->
+<audio id="notification-audio" src="{% static '/audio/notification_audio.mp3' %}"></audio>
+<!-- Modal -->
+<div id="alert-modal" class="modal">
+    <div class="modal-content">
+        <span id="alert-message"></span>
+        <button id="close-modal-btn">Close</button>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+    var source = new EventSource("{% url 'main:sse' %}");
+    var isFirstLoad = true; // Flag to prevent popup on first load
+    source.addEventListener('message', function(event) {
+        var data = JSON.parse(event.data);
+        var backAlertsElem = document.getElementById('back-alerts');
+        var neckAlertsElem = document.getElementById('neck-alerts');
+        var backAlerts = parseInt(backAlertsElem.innerText);
+        var neckAlerts = parseInt(neckAlertsElem.innerText);
+        // Update the values of the elements with the received data
+        backAlertsElem.innerText = data.back_alert;
+        neckAlertsElem.innerText = data.neck_alert;
+        // Show the modal popup if the value of back-alerts or neck-alerts changes
+        var message = '';
+        if (!isFirstLoad && parseInt(data.back_alert) > backAlerts) {
+            message += 'Straighten your back! ';
+        }
+        if (!isFirstLoad && parseInt(data.neck_alert) > neckAlerts) {
+            message += 'straighten your neck!';
+        }
+        if (message !== '') {
+            showModal(message);
+        }
+        // Set the flag to false after the first load
+        isFirstLoad = false;
+    });
+
+    function showModal(message) {
+        var modal = document.getElementById('alert-modal');
+        var modalMessage = document.getElementById('alert-message');
+        modalMessage.innerText = message;
+        var audio = document.getElementById('notification-audio');
+        audio.play(); // play the audio
+        modal.style.display = "block";
+        setTimeout(function() {
+            modal.style.display = "none";
+        }, 3000);
+    }
+
+</script>
+
+{% endblock %}

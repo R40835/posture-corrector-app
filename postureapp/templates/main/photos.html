@@ -1,0 +1,35 @@
+{% extends "main/base.html" %}
+{% block content %}
+{% if photos %}
+    <div class="text-center">
+        <h1>Incorrect Posture Photos</h1>
+        <div class="alert alert-info mt-4 d-inline-block" role="alert" style="max-width: 500px;">
+            <ul>
+                <li><p>Photos are sorted by the most recent.</p></li>
+                <li><p>You can search your photos by date.</p></li>
+            </ul>
+        </div>
+    </div>
+    <hr>
+
+        <div class="container">
+            <div class="row">
+              {% for photo in photos %}
+                <div class="col-sm-4 px-3 mb-3">
+                  <img src="{{ photo.posture_photo.url }}" class="img-fluid">
+                </div>
+                {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                  </div><div class="row">
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>          
+               
+{% else %}
+      <div class="text-center">
+            <div class="alert alert-danger mt-4 d-inline-block" role="alert" style="max-width: 500px;">
+                <p>No photos found for the selected date.</p>
+            </div>
+        </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "main/base.html" %}
+{% block content %}
+<div class="container mt-5">
+
+    <div class="row d-flex justify-content-center">
+
+        <div class="col-md-7">
+
+            <div class="card p-4 py-4" id="profile">
+                <div class="card-header text-center"><strong>User Feedback</strong></div>
+                <div class="card-body">
+                    <p>Have you tested the app? If so please let us know what you think about it.</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="text-center">
+                            <input class="btn btn-primary" type="submit" value="Post">
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

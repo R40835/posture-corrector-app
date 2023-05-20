@@ -1,0 +1,187 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.content {
+  min-height: 100%;
+  margin-bottom: -50px; 
+}
+  
+header {
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+  
+header img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+  
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+  
+#hero img {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+  
+#hero h2 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+  
+#description p {
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+#features h3 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+  
+#features ul {
+  list-style: disc;
+  font-size: 20px;
+  line-height: 1.5;
+  margin-left: 40px;
+}
+  
+#testimonials h3 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+blockquote {
+  font-size: 24px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+blockquote p {
+  font-style: italic;
+}
+
+blockquote cite {
+  font-weight: bold;
+}
+
+#call-to-action {
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  margin-top: 40px;
+}
+
+#call-to-action p {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.cta-button {
+  display: inline-block;
+  background-color: #0077cc;
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 20px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+.cta-button:hover {
+  background-color: #005faa;
+}
+
+.card {
+  max-width: 500px;
+  margin: 0 auto;
+  /* optional: add some padding */
+  padding: 20px;
+}
+/*user profile*/
+.user-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-picture {
+  margin-right: 20px;
+}
+
+.profile-picture img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.profile-info h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.profile-info p {
+  font-size: 18px;
+  margin: 0;
+}
+/* modals */
+/* CSS */
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+}
+
+#close-modal-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px 10px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#profile {
+  background-color: #f5f5f5;
+}

@@ -1,0 +1,97 @@
+{% extends "main/base.html" %}
+{% block content %}
+<div class="container mt-5">
+
+    <div class="row d-flex justify-content-center">
+
+        <div class="col-md-5">
+            <div class="container">
+                
+                <div class="card p-4 py-4" id="profile">
+                    <div class="user-profile">
+                        <div class="profile-picture">
+                            {% if user.profile_picture %}
+                                <img src="{{user.profile_picture.url}}" alt="Profile Picture">
+                            {% else %}
+                                <img src="/media/app_photos/index.jpg" alt="Profile Picture">
+                            {% endif %}
+                        </div>
+                        <div class="profile-info">
+                        <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+                        <p>{{ user.email }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><br><br>
+
+<!-- Main content -->
+<div class="container">
+    <div class="text-center">
+        <h2>Your Posture Progress</h2>
+        <hr>
+    </div>
+    <div class="row">
+      <div class="col-md-4 text-center">
+        <p>Good Posture<br><strong>{{ good_postures }}</strong></p>
+      </div>
+      <div class="col-md-4 text-center">
+        <p>Posture Awareness<br><strong>{{ days_in_app }} Days</strong></p>
+      </div>
+      <div class="col-md-4 text-center">
+        <p>Posture Improvement<br>
+            <strong>
+                {% if improvement > 0 %}
+                    + {{ improvement }}%
+                {% else %}
+                    {{ improvement }}%
+                {% endif %}
+        </strong></p>
+      </div>
+    </div>
+    
+    <hr>
+    <div class="text-center">
+        <h2>Your Posture Stats</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-4 text-center">
+        <p>Latest Posture Score</p>
+        <h3>{{ latest_score}}</h3>
+      </div>
+      <div class="col-md-4 text-center">
+        <p>Average Posture Score</p>
+        <h3>{{ average_score }}</h3>
+      </div>
+      <div class="col-md-4 text-center">
+        <p>Best Posture Score</p>
+        <h3>{{ highest_score }}</h3>
+      </div>
+    </div>
+    
+    <hr>
+    <div class="text-center">
+        <h2>Posture Tips</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-4 text-center">
+          <p><strong>Tip #1:</strong> Sit up straight with your shoulders back and down on your chair.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <p><strong>Tip #2:</strong> Keep your feet flat on the ground and your knees at a 90-degree angle.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <p><strong>Tip #3:</strong> Take breaks every 30 minutes to stretch and move around.</p>
+        </div>
+      </div>
+</div><hr><br><br>
+
+    <div class="text-center">
+        <a class="btn btn-secondary" href="{% url 'main:monitoring' %}" role="button">Monitor Posture</a> 
+        <a class="btn btn-secondary" href="{% url 'main:record' %}" role="button">Check History</a>
+    </div>
+    
+<br><br>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "main/base.html" %}
+{% block content %}
+<div class="container mt-5">
+
+    <div class="row d-flex justify-content-center">
+
+        <div class="col-md-5">
+            <div class="container">
+                <div class="card p-4 py-4" id="profile">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h5 class="card-title">Sign Up</h5>
+                        <hr>
+                        <p class="card-text">Please provide the details required in order to register</p>
+
+                        <br>
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <input class="btn btn-primary" type="submit" value="Sign Up">
+                        </form>
+                    </div><br>
+                    <small>already have an account? <a href="{% url 'main:login' %}">Login here</a></small>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><br><br>
+
+{% endblock %}
