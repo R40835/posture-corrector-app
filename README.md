@@ -42,7 +42,7 @@ python manage.py runserver <host-address>:5000
   src="https://github.com/R40835/Posture-Corrector-App/assets/100576473/a53deb70-27fa-4998-a5e2-9664065aba78"
   alt="Alt text"
   title="Optional title"
-  style="display: inline-block; margin: 0 auto; max-width: 100px">
+  style="display: inline-block; margin: 0 auto; max-width: 40px">
 
 # Contributing
 Contributions to the Posture Corrector App are welcome! If you have any ideas, bug fixes, or improvements, please submit a pull request. Make sure to follow the established coding style and guidelines.
