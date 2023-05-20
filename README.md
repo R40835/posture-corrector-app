@@ -16,9 +16,9 @@ The Posture Corrector App is a computer vision-based application developed using
 2. Create a postgres database and link it to the app in settings.py.
 3. Pass your IP address to the allowed_hosts in settings.py.
 4. Make migrations using the following command: 
-'''
+```
 python manage.py makemigrations
-'''
+```
 6. Migrate using the following command: '''python manage.py migrate'''
 7. Run the server using the following command: '''python manage.py runserver <host-address>:5000'''
 8. Access the web app through a browser to monitor posture, view statistics, and provide feedback.
