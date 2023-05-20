@@ -47,3 +47,4 @@ This project is licensed under the MIT License. See the LICENSE file for more in
 
 # Contact
 For any questions or inquiries, please reach out to meraghnir93@gmail.com
+![Monitoring device](https://github.com/R40835/Posture-Corrector-App/assets/100576473/a53deb70-27fa-4998-a5e2-9664065aba78)
