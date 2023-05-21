@@ -195,14 +195,22 @@ class PostureCorrector:
     
     def _frontal_back_corrector(self):
         '''checks correct back posture returns 0 for incorrect and 1 for correct posture'''
-
+        
+        # coordinates of left and right shoulders, left and right hips, and nose
         ls = self.parts_coordinates['left_shoulder']
+        rs = self.parts_coordinates['right_shoulder']
         lh = self.parts_coordinates['left_hip']
+        rh = self.parts_coordinates['right_hip']
         nose = self.parts_coordinates['nose']
 
-        # coordinates of left and right shoulders, left and right hips, and nose
-        shoulder_hip_dist = self._euclidian_distance(x1=ls[0], x2=lh[0], y1=ls[1], y2=lh[1])
-        nose_hip_dist = self._euclidian_distance(x1=nose[0], x2=lh[0], y1=nose[1], y2=lh[1]) 
+        # calculating distances between shoulders and hips
+        left_shoulder_hip_dist = self._euclidian_distance(x1=ls[0], x2=lh[0], y1=ls[1], y2=lh[1])
+        right_shoulder_hip_dist = self._euclidian_distance(x1=rs[0], x2=rh[0], y1=rs[1], y2=rh[1])
+        shoulder_hip_dist = left_shoulder_hip_dist + right_shoulder_hip_dist
+        # calculating distances between nose and hips
+        left_nose_hip_dist = self._euclidian_distance(x1=nose[0], x2=lh[0], y1=nose[1], y2=lh[1]) 
+        right_nose_hip_dist = self._euclidian_distance(x1=nose[0], x2=rh[0], y1=nose[1], y2=rh[1]) 
+        nose_hip_dist = left_nose_hip_dist + right_nose_hip_dist
 
         # compare the distances
         if nose_hip_dist < shoulder_hip_dist:
