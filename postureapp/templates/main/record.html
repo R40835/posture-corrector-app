@@ -45,7 +45,9 @@
         <td>{{ video.total_alerts }}</td>
         <td> 
           {% for incorrect_posture in video.incorrect_postures %} 
-          {{incorrect_posture}} <br>  
+          
+            {{incorrect_posture}} <br>
+            <hr>  
           {% endfor %}
         </td>
         <td>{{ video.posture_score }}</td>
