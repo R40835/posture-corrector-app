@@ -93,10 +93,10 @@ while cap.isOpened():
     pose.frame = frame
     # render neck and back postures on frames
     if len(pose.back_status) > 1:
-        text = f"back posture is: {pose.back_status[len(pose.back_status) - 1]}"
+        text = f"back posture: {pose.back_status[len(pose.back_status) - 1]}"
         cv2.putText(frame, text, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
     if len(pose.neck_status) > 1:
-        text2 = f"neck posture is: {pose.neck_status[len(pose.neck_status) - 1]}"
+        text2 = f"neck posture: {pose.neck_status[len(pose.neck_status) - 1]}"
         cv2.putText(frame, text2, (50, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2) 
 
     # pop up monitoring screen
