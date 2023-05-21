@@ -186,11 +186,11 @@ class PostureCorrector:
         # Compare the y-coordinates to determine if the subject is sat upright
         # We'll use a range of 10 pixels to allow for some variability in how people sit on chairs
         if (abs(nose_y - left_shoulder_y) < .08) & (abs(nose_y - right_shoulder_y) < .08):
-            self.neck_status = np.append(self.neck_status, 'bent') 
+            self.neck_status = np.append(self.neck_status, 'forward-leaning neck') 
             return 0
         
         # storing neck posture result
-        self.neck_status = np.append(self.neck_status, 'upright') 
+        self.neck_status = np.append(self.neck_status, 'upright neck') 
         return 1
     
     def _frontal_back_corrector(self):
@@ -214,10 +214,10 @@ class PostureCorrector:
 
         # compare the distances
         if nose_hip_dist < shoulder_hip_dist:
-            self.back_status = np.append(self.back_status, 'leaning froward') 
+            self.back_status = np.append(self.back_status, 'froward-leaning back') 
             return 0
         elif nose_hip_dist > shoulder_hip_dist:
-            self.back_status = np.append(self.back_status, 'upright') 
+            self.back_status = np.append(self.back_status, 'upright back') 
             return 1
             
     def _lateral_back_corrector(self) -> int:
@@ -237,13 +237,13 @@ class PostureCorrector:
             right_hip_angle = self._angle_calculator(p1=rs, p2=rh, p3=rk)
 
             if 90 < right_hip_angle < 115: 
-                self.back_status = np.append(self.back_status, 'upright') 
+                self.back_status = np.append(self.back_status, 'upright back') 
                 return 1
             elif right_hip_angle < 90: 
-                self.back_status = np.append(self.back_status, 'leaning froward') 
+                self.back_status = np.append(self.back_status, 'froward-leaning back') 
                 return 0
             elif right_hip_angle > 115: 
-                self.back_status = np.append(self.back_status, 'reclined') 
+                self.back_status = np.append(self.back_status, 'reclined back') 
                 return 0
             
         # lateral left
@@ -389,7 +389,7 @@ class PostureCorrector:
         '''sends a user's posture data to the django app so that it could be stored in the database'''
 
         url = 'http://' + self.url + ':'+ self.port + '/main/video-data/'
-        if not len(self.incorrect_postures) > 1:
+        if len(self.incorrect_postures) == 0:
             self.incorrect_postures.append('No Incorrect Postures')
         data = {
             'email': self.email,
