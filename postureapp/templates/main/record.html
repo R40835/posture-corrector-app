@@ -43,21 +43,30 @@
         <td>{{ video.start_time }}</td>
         <td>{{ video.end_time }}</td>
         <td>{{ video.total_alerts }}</td>
-        <td>{{ video.incorrect_postures }}</td>
+        <td> 
+          {% for incorrect_posture in video.incorrect_postures %} 
+          {{incorrect_posture}} <br>  
+          {% endfor %}
+        </td>
         <td>{{ video.posture_score }}</td>
       </tr>
     {% endfor %}
   </tbody>
 </table>
 {% else %}
-    <div class="text-center">
-        <div class="alert alert-danger mt-4 d-inline-block" role="alert" style="max-width: 500px;">
-        <p>You have no videos for now, start monitoring your posture <a class="icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 25, 135, 84;" href="{% url 'main:monitoring' %}">
-            here
-            <svg class="bi" aria-hidden="true"><use xlink:href="#arrow-right"></use></svg>
-        </a></p>
-        </div>
-    </div>
+<div class="text-center">
+  <div class="alert alert-danger mt-4 d-inline-block" role="alert" style="max-width: 500px;">
+    <p>No videos found, monitor your posture <a class="icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 25, 135, 84;" href="{% url 'main:monitoring' %}">
+      here
+      <svg class="bi" aria-hidden="true"><use xlink:href="#arrow-right"></use></svg>
+  </a></p>
+  </div>
+</div>
     
 {% endif %}
 {% endblock %}
+<p>You have no videos for now, start monitoring your posture <a class="icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 25, 135, 84;" href="{% url 'main:monitoring' %}">
+  here
+  <svg class="bi" aria-hidden="true"><use xlink:href="#arrow-right"></use></svg>
+</a></p>
+</div>
