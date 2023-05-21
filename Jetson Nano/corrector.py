@@ -171,9 +171,9 @@ class PostureCorrector:
 
         # 325 is the same angle threshold as 35 it is just inverted
         if (35 < right_shoulder_angle) & (left_shoulder_angle < 325):
-            self.neck_status = np.append(self.neck_status, 1)
+            self.neck_status = np.append(self.neck_status, 'upright neck')
             return 1
-        self.neck_status = np.append(self.neck_status, 0)
+        self.neck_status = np.append(self.neck_status, 'forward-leaning neck')
         return 0
 
     def _lateral_neck_corrector(self) -> int:
@@ -252,13 +252,13 @@ class PostureCorrector:
             left_hip_angle = self._angle_calculator(p1=ls, p2=lh, p3=lk)
 
             if 245 < left_hip_angle < 270: 
-                self.back_status = np.append(self.back_status, 'upright') 
+                self.back_status = np.append(self.back_status, 'upright back') 
                 return 1
             elif left_hip_angle < 245: 
-                self.back_status = np.append(self.back_status, 'reclined') 
+                self.back_status = np.append(self.back_status, 'reclined back') 
                 return 0
             elif left_hip_angle > 270: 
-                self.back_status = np.append(self.back_status, 'leaning forward') 
+                self.back_status = np.append(self.back_status, 'forward-leaning back') 
                 return 0
 
     def _angle_calculator(self, p1: np.array, p2: np.array, p3: np.array) -> float:
