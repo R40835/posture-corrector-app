@@ -44,17 +44,20 @@ while 1:
         print('\n' + 'Authentication successful' + '\n')
         print(options)
         while 1:
-            camera_position = int(input('Enter your camera position choice: '))
-            if (camera_position == 1) | (camera_position == 2) | (camera_position == 3):
-                if camera_position == 1:
-                    print('\n' + 'Camera configured to [lateral right]' + '\n')
-                elif camera_position == 2:
-                    print('\n' + 'Camera configured to [frontal]' + '\n')
-                elif camera_position == 3:
-                    print('\n' + 'Camera configured to [lateral left]' + '\n')
-                print('Launching Program...' + '\n')
-                break
-            else:
+            try:
+                camera_position = int(input('Enter your camera position choice: '))
+                if (camera_position == 1) | (camera_position == 2) | (camera_position == 3):
+                    if camera_position == 1:
+                        print('\n' + 'Camera configured to [lateral right]' + '\n')
+                    elif camera_position == 2:
+                        print('\n' + 'Camera configured to [frontal]' + '\n')
+                    elif camera_position == 3:
+                        print('\n' + 'Camera configured to [lateral left]' + '\n')
+                    print('Launching Program...' + '\n')
+                    break
+                else:
+                    print('\nError: Incorrect option.\n\n' + options)
+            except:
                 print('\nError: Incorrect option.\n\n' + options)
         break
     else:
