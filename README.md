@@ -10,6 +10,10 @@ The Posture Corrector App is a computer vision-based application developed using
 - Authentication system for user profiles and personalised statistics.
 - Spinal health promotion through posture correction.
 - Photos of incorrect postures sustained throughout the monitoring video.
+<div style="display: flex; justify-content: center;">
+  <img src="https://github.com/R40835/Posture-Corrector-App/blob/main/assets/dashboard.png?raw=true" style="width: 33%;">
+  <img src="https://github.com/R40835/Posture-Corrector-App/blob/main/assets/history.png?raw=true" style="width: 33%;">
+</div>
 
 # Django App Setup Instructions
 1. Install the necessary dependencies and libraries listed in the requirements.txt file using the following command:
