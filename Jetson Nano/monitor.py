@@ -8,7 +8,7 @@ import requests
 import time
 
 
-def authenticate_user(url: str, email: str, password: str) -> str:
+def authenticate_user(url: str, port:str, email: str, password: str) -> str:
     '''
     checks if the user credential are correct before launching the program
     
@@ -16,7 +16,7 @@ def authenticate_user(url: str, email: str, password: str) -> str:
     :param email: user email
     :param password: user password
     '''
-    url = 'http://' + url + ':5000/main/identify-camera/'
+    url = 'http://' + url + ':' + port + '/main/identify-camera/'
     data = {
         'email': email,
         'password': password,
@@ -31,8 +31,10 @@ options = 'Please choose a camera position to be monitored from. Your options ar
               3 ---> [lateral left]\n \
               \n'
 # pass in the url the ip address used to host the django app 
-# (before running this script run the django app server; it has to be listening on port 5000)
+# (before running this script run the django app server; assign the port on which the server is listening)
 url = ''
+# assign port
+port = ''
 email = ''
 password = ''
 camera_position = 0
@@ -40,7 +42,7 @@ print('Please enter your account email and password to be authenticated.' +'\n')
 while 1:
     email = str(input('Enter your email: '))
     password = getpass.getpass(prompt='Enter your password: ')
-    if authenticate_user(url, email, password) == 'user identified':
+    if authenticate_user(url, port, email, password) == 'user identified':
         print('\n' + 'Authentication successful' + '\n')
         print(options)
         while 1:
@@ -66,6 +68,7 @@ while 1:
 # creating an instance of the class defined in corrector.py
 pose = PostureCorrector(
                     url=url, 
+                    port=port,
                     email=email, 
                     password=password,
                     camera_position=camera_position, 
