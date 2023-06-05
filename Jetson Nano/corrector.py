@@ -20,7 +20,7 @@ class PostureCorrector:
     GPU architecture.
     '''
 
-    def __init__(self, url: str, email: str, password: str, camera_position: int=1, fps: int=None, duration: int=10):
+    def __init__(self, url: str, port:str, email: str, password: str, camera_position: int=1, fps: int=None, duration: int=10):
         '''
         Constructor
         
@@ -39,7 +39,7 @@ class PostureCorrector:
         self.password = password
         # Django App Server:
         self.url = url 
-        self.port = '5000'
+        self.port = port
         # Defining the number of frames generated in 10 seconds: 
         # this is to trigger the alarm on the user interface if the incorrect predictions 
         # in a row for each frame equals the number of frames in 10 seconds
