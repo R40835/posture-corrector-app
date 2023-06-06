@@ -36,7 +36,7 @@ python manage.py migrate
 ```
 6. Run the server using the following command: 
 ```
-python manage.py runserver <host-address>:5000
+python manage.py runserver <host-address>:<port>
 ```
 7. Access the web app through a browser to monitor posture, view statistics, and provide feedback.
   
