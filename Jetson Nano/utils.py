@@ -1,9 +1,27 @@
 import numpy as np
+import requests
 import cv2
 
 
 # utility functions to draw the key points detected by 
 # the moveNet model and the connection between them
+def authenticate_user(url: str, port:str, email: str, password: str) -> str:
+    '''
+    checks if the user credential are correct before launching the program
+    
+    :param url: app url
+    :param email: user email
+    :param password: user password
+    '''
+    url = 'http://' + url + ':' + port + '/main/identify-camera/'
+    data = {
+        'email': email,
+        'password': password,
+        }
+    response = requests.post(url, data=data)
+    return response.json()['status']
+
+
 def draw_keypoints(frame, keypoints, ct) -> None:
     '''draws key body parts detected by the moveNet model
     :param frame: video frame in the form of an array
