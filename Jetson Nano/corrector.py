@@ -224,9 +224,9 @@ class PostureCorrector(MoveNetModel):
             # incrementing alerts count
             self.__app.total_alerts = 1
             if counter_type == 'back':
-                self.__app.incorrect_postures = self.__back_status[-1] #push in last item
+                self.__app.incorrect_postures = self.__back_status[-1] 
             elif counter_type == 'neck':
-                self.__app.incorrect_postures = self.__neck_status[-1] #TODO: IM USING SETTERS
+                self.__app.incorrect_postures = self.__neck_status[-1] 
 
     def _photo(self, frame: np.array) -> None:
         '''stores the last video frame when the user's posture is incorrect for 10 seconds'''
