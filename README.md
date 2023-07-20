@@ -48,7 +48,7 @@ python manage.py runserver <host-address>:<port>
 5. Run the monitor.py script and authenticate to your account created on the Django app.
 
 <div style="display: flex; justify-content: center;">
-    <img src="https://github.com/R40835/Posture-Corrector-App/blob/main/assets/hardware.jpg?raw=true" style="width: 30%;" />
+    <img src="https://github.com/R40835/Posture-Corrector-App/blob/main/assets/hardware.jpg?raw=true" style="width: 20%;" />
 </div>
 
 # Contributing
