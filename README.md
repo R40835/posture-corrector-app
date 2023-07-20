@@ -11,9 +11,9 @@ The Posture Corrector App is a computer vision-based application developed using
 - Spinal health promotion through posture correction.
 - Photos of incorrect postures sustained throughout the monitoring video.
 <div style="display: flex; justify-content: center;">
-  <img src="https://github.com/R40835/Posture-Corrector-App/blob/main/assets/dashboard.png?raw=true" style="width: 30%;">
-  <img src="https://github.com/R40835/posture-corrector-app/blob/main/assets/detections.PNG?raw=true" style="width: 30%;">
-  <img src="https://github.com/R40835/Posture-Corrector-App/blob/main/assets/history.png?raw=true" style="width: 30%;">
+  <img src="https://github.com/R40835/Posture-Corrector-App/blob/main/assets/dashboard.png?raw=true" style="width: 32%;">
+  <img src="https://github.com/R40835/posture-corrector-app/blob/main/assets/detections.PNG?raw=true" style="width: 32%;">
+  <img src="https://github.com/R40835/Posture-Corrector-App/blob/main/assets/history.png?raw=true" style="width: 32%;">
 
 </div>
 <div style="display: flex; justify-content: center;">
