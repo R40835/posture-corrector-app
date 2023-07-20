@@ -13,13 +13,12 @@ class PostureCorrector(MoveNetModel):
     * The body key joints are used to calculate angles and distances used as thresholds to estimate incorrect postures.
     * The model has been optimised to run on the jetson nano by converting it to ONNX and then to a TensorRT engine 
     used to run inference.
-    * This runs only on the Jetson Nanos as the optimisation model file (engine.trt) is tailored to the Jetson Nano's 
+    * This runs only on the Jetson Nanos as the optimised model's file (engine.trt) is tailored to the Jetson Nano's 
     GPU architecture.
     '''
 
     def __init__(self, url: str, port:str, email: str, password: str, camera_position: int=1, fps: int=None, duration: int=10):
         super().__init__()
-        # number of frames generated in 10 seconds: 
         self.__duration = duration 
         self.__num_frames = int(self.__duration * fps) / 2
         self.__CAMERA_POSITION = camera_position
@@ -47,14 +46,14 @@ class PostureCorrector(MoveNetModel):
     @property
     def back_status(self) -> np.array:
         return self.__back_status
-    
-    @frame.setter
-    def frame(self, frame: np.array) -> None:
-        self.__frame = frame 
         
     @property
     def app(self) -> object:
         return self.__app 
+
+    @frame.setter
+    def frame(self, frame: np.array) -> None:
+        self.__frame = frame 
 
     def monitor_posture(self) -> None:
         '''
