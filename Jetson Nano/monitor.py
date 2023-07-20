@@ -113,6 +113,5 @@ def main():
     except:
         print('Couldn\'t update database')
 
-
 if __name__ == '__main__':
     main()
