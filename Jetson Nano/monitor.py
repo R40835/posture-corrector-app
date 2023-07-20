@@ -15,9 +15,9 @@ def main():
                 \n'
     # pass in the url the ip address used to host the django app 
     # (before running this script run the django app server; assign the port on which the server is listening)
-    url = '10.212.129.178'
+    url = ''
     # assign port
-    port = '5000'
+    port = ''
     email = ''
     password = ''
     camera_position = 0
