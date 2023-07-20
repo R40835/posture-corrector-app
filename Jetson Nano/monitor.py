@@ -14,7 +14,7 @@ def main():
                 3 ---> [lateral left]\n \
                 \n'
     # pass in the url the ip address used to host the django app 
-    # (before running this script run the django app server; assign the port on which the server is listening)
+    # before running this script run the django app server; assign the port on which the server is listening
     url = ''
     # assign port
     port = ''
@@ -79,7 +79,7 @@ def main():
         # detection of the current posture
         user.monitor_posture()
         # update frames for photos if incorrect postures last 10 seconds
-        user.frame = frame #TODO: GETTER AND SETTER
+        user.frame = frame 
         # render neck and back postures on frames
         if len(user.back_status) > 1:
             text = f"back posture: {user.back_status[-1]}"
