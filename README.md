@@ -58,8 +58,11 @@ LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1
 ```
 6. Run the monitor.py script and authenticate to your account created on the Django app.
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; justify-content: center;"> 
     <img src="https://github.com/R40835/Posture-Corrector-App/blob/main/assets/hardware.jpg?raw=true" style="width: 20%;" />
+    <img src="https://github.com/R40835/posture-corrector-app/blob/main/assets/startingprogram.jpg?raw=true" style="width: 20%;" />
+    <img src="https://github.com/R40835/posture-corrector-app/blob/main/assets/programatrun.jpg?raw=true" style="width: 20%;" />
+
 </div>
 
 # Contributing
