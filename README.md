@@ -46,9 +46,10 @@ python manage.py runserver <host-address>:<port>
 3. Install TensorRT, numpy, pycuda, and the latest version of OpenCV on the Jetson Nano.
 4. In monitor.py set the url to the IP address where your hosting your Django app.
 5. Run the monitor.py script and authenticate to your account created on the Django app.
-<p align="center">
-  <img src="https://github.com/R40835/Posture-Corrector-App/blob/main/assets/hardware.jpg?raw=true" style="width: 30%;" />
-</p>
+
+<div style="display: flex; justify-content: center;">
+    <img src="https://github.com/R40835/Posture-Corrector-App/blob/main/assets/hardware.jpg?raw=true" style="width: 30%;" />
+</div>
 
 # Contributing
 Contributions to the Posture Corrector App are welcome! If you have any ideas, bug fixes, or improvements, please submit a pull request. Make sure to follow the established coding style and guidelines.
