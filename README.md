@@ -51,8 +51,12 @@ python manage.py runserver <host-address>:<port>
 1. Write the image into a SDcard following the instruction from nvidia website https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#setup.
 2. Connect the Jetson Nano to the camera module and ensure it is properly configured.
 3. Install TensorRT, numpy, pycuda, and the latest version of OpenCV on the Jetson Nano.
-4. In monitor.py set the url to the IP address where your hosting your Django app.
-5. Run the monitor.py script and authenticate to your account created on the Django app.
+4. In monitor.py set the url to the address where your hosting your Django app, and the port to the port where the app is listening.
+5. Open a terminal and type in the following command:
+```
+LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1
+```
+6. Run the monitor.py script and authenticate to your account created on the Django app.
 
 <div style="display: flex; justify-content: center;">
     <img src="https://github.com/R40835/Posture-Corrector-App/blob/main/assets/hardware.jpg?raw=true" style="width: 20%;" />
