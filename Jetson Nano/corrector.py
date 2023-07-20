@@ -19,14 +19,10 @@ class PostureCorrector(MoveNetModel):
 
     def __init__(self, url: str, port:str, email: str, password: str, camera_position: int=1, fps: int=None, duration: int=10):
         super().__init__()
-        # Defining the number of frames generated in 10 seconds: 
-        # this is to trigger the alarm on the user interface if the incorrect predictions 
-        # in a row for each frame equals the number of frames in 10 seconds
+        # number of frames generated in 10 seconds: 
         self.__duration = duration 
         self.__num_frames = int(self.__duration * fps) / 2
-        # other attributes
         self.__CAMERA_POSITION = camera_position
-        #
         self.__frame = None
         self.__neck_status = np.array([])
         self.__back_status = np.array([])
