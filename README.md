@@ -26,7 +26,7 @@ The Posture Corrector App is a computer vision-based application developed using
 <div style="display: flex; justify-content: center;">
 </div>
 
-# Django App Setup Instructions
+# Django App Setup
 1. Install the necessary dependencies and libraries listed in the requirements.txt file using the following command:
 ```
 pip install -r requirements.txt
@@ -47,7 +47,7 @@ python manage.py runserver <host-address>:<port>
 ```
 7. Access the web app through a browser to monitor posture, view statistics, and provide feedback.
   
-# Jetson Nano setup
+# Jetson Nano Setup
 1. Write the image into a SDcard following the instruction from nvidia website https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#setup.
 2. Connect the Jetson Nano to the camera module and ensure it is properly configured.
 3. Install TensorRT, numpy, pycuda, and the latest version of OpenCV on the Jetson Nano.
