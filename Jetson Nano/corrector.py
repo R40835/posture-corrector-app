@@ -127,12 +127,12 @@ class PostureCorrector(MoveNetModel):
         nose = self.parts_coordinates['nose']
 
         # calculating distances between shoulders and hips
-        left_shoulder_hip_dist = self.euclidian_distance(x1=ls[0], x2=lh[0], y1=ls[1], y2=lh[1])
-        right_shoulder_hip_dist = self.euclidian_distance(x1=rs[0], x2=rh[0], y1=rs[1], y2=rh[1])
+        left_shoulder_hip_dist = self.euclidean_distance(x1=ls[0], x2=lh[0], y1=ls[1], y2=lh[1])
+        right_shoulder_hip_dist = self.euclidean_distance(x1=rs[0], x2=rh[0], y1=rs[1], y2=rh[1])
         shoulder_hip_dist = left_shoulder_hip_dist + right_shoulder_hip_dist
         # calculating distances between nose and hips
-        left_nose_hip_dist = self.euclidian_distance(x1=nose[0], x2=lh[0], y1=nose[1], y2=lh[1]) 
-        right_nose_hip_dist = self.euclidian_distance(x1=nose[0], x2=rh[0], y1=nose[1], y2=rh[1]) 
+        left_nose_hip_dist = self.euclidean_distance(x1=nose[0], x2=lh[0], y1=nose[1], y2=lh[1]) 
+        right_nose_hip_dist = self.euclidean_distance(x1=nose[0], x2=rh[0], y1=nose[1], y2=rh[1]) 
         nose_hip_dist = left_nose_hip_dist + right_nose_hip_dist
 
         # compare the distances
@@ -257,7 +257,7 @@ class PostureCorrector(MoveNetModel):
         return angle
 
     @staticmethod
-    def euclidian_distance(x1: float, y1: float, x2: float, y2: float) -> float:
+    def euclidean_distance(x1: float, y1: float, x2: float, y2: float) -> float:
         '''
         computes distance between 2 cartesian points.
 
