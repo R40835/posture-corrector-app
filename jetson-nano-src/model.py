@@ -43,7 +43,7 @@ class MoveNetModel:
             'right_ankle': None
         }
 
-    def detect(self, input_image: np.array) -> None:
+    def detect(self, input_image: np.ndarray[float]) -> None:
         '''
         making predictions on the 17 body key points and updating coordinates
         
