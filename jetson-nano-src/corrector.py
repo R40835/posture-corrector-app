@@ -36,15 +36,15 @@ class PostureCorrector(MoveNetModel):
                                     )
 
     @property
-    def frame(self) -> np.array:
+    def frame(self) -> np.ndarray[float]:
         return self.__frame 
     
     @property
-    def neck_status(self) -> np.array:
+    def neck_status(self) -> np.ndarray[float]:
         return self.__neck_status
 
     @property
-    def back_status(self) -> np.array:
+    def back_status(self) -> np.ndarray[float]:
         return self.__back_status
         
     @property
@@ -52,7 +52,7 @@ class PostureCorrector(MoveNetModel):
         return self.__app 
 
     @frame.setter
-    def frame(self, frame: np.array) -> None:
+    def frame(self, frame: np.ndarray[float]) -> None:
         self.__frame = frame 
 
     def monitor_posture(self) -> None:
@@ -228,14 +228,14 @@ class PostureCorrector(MoveNetModel):
             elif counter_type == 'neck':
                 self.__app.incorrect_postures = self.__neck_status[-1] 
 
-    def _photo(self, frame: np.array) -> None:
+    def _photo(self, frame: np.ndarray[float]) -> None:
         '''stores the last video frame when the user's posture is incorrect for 10 seconds'''
 
         cv2.imwrite("incorrect_postures/incorrect_posture_{}.jpg".format(self.__photos_counter), frame)
         self.__photos_counter += 1
 
     @staticmethod
-    def angle_calculator(p1: np.array, p2: np.array, p3: np.array) -> float:
+    def angle_calculator(p1: np.ndarray[float], p2: np.ndarray[float], p3: np.ndarray[float]) -> float:
         '''
         computes angle for three given points and returns the angle in degrees.
 
