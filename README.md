@@ -81,11 +81,11 @@ Some of the body key joints detected by the moveNet model are used in order to d
 
 # Performance Optimisation
 The original model was in the form of a Tensorflow-lite file, that was optimised to an ONNX file, and then to a TensorRT engine in order to speed up the inference. The following table shows the performance of each model on the Jetson Nano:
-| Model Format | Memory Usage (megabytes) | Video Latency (seconds) | Inference Time per Frame (seconds) |
-| ------------ | ------------------------ | ----------------------- | ---------------------------------- |
-| .TFLITE      | 328.11 MB                | 8.00 s                  | 0.45 s                             |
-| .onnx        | 98.06 MB                 | 6.00 s                  | 0.36 s                             |
-| .trt         | 156.86 MB                | 0.5 s                   | 0.043 s                            |
+| Model Format     | Memory Usage (megabytes) | Video Latency (seconds) | Inference Time per Frame (seconds) |
+| ---------------- | ------------------------ | ----------------------- | ---------------------------------- |
+| TFLITE file      | 328.11 MB                | 8.00 s                  | 0.45 s                             |
+| ONNX file        | 98.06 MB                 | 6.00 s                  | 0.36 s                             |
+| TRT file         | 156.86 MB                | 0.5 s                   | 0.043 s                            |
 
 # Contributing
 Contributions to the Posture Corrector App are welcome! If you have any ideas, bug fixes, or improvements, please submit a pull request. Make sure to follow the established coding style and guidelines.
