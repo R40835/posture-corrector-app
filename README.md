@@ -73,9 +73,9 @@ Once the monitoring script is running, and the authentication is complete on the
 
 Some of the body key joints detected by the moveNet model are used in order to determine the user posture as shown below:
 <div style="display: flex; justify-content: center;"> 
-    <img src="https://github.com/R40835/posture-corrector-app/blob/main/assets/perspectives2.PNG?raw=true" style="width: 30%;" />
-    <img src="https://github.com/R40835/posture-corrector-app/blob/main/assets/moveNet.PNG?raw=true" style="width: 15%;" />
-    <img src="https://github.com/R40835/posture-corrector-app/blob/main/assets/perspectives.PNG?raw=true" style="width: 30%;" />
+    <img src="https://github.com/R40835/posture-corrector-app/blob/main/assets/perspectives2.PNG?raw=true" style="width: 32%;" />
+    <img src="https://github.com/R40835/posture-corrector-app/blob/main/assets/moveNet.PNG?raw=true" style="width: 17%;" />
+    <img src="https://github.com/R40835/posture-corrector-app/blob/main/assets/perspectives.PNG?raw=true" style="width: 32%;" />
 
 </div>
 
