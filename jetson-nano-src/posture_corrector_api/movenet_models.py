@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import numpy as np
-# for the first version (.TFLITE)
+# for the first version (.tflite)
 import tensorflow as tf
 # for the second version (.onnx)
 import onnxruntime as ort
