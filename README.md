@@ -80,7 +80,7 @@ Some of the body key joints detected by the moveNet model are used in order to d
 </div>
 
 # Performance Optimisation
-The original model was in the form of a Tensorflow-lite file, that was optimised to an ONNX file, and then to a Tensort engine in order to speed up the inference. The following table shows the performance of each model on the jetson nano:
+The original model was in the form of a Tensorflow-lite file, that was optimised to an ONNX file, and then to a TensorRT engine in order to speed up the inference. The following table shows the performance of each model on the Jetson Nano:
 | Model Format | Memory Usage (megabytes) | Video Latency (seconds) | Inference Time per Frame (seconds) |
 | ------------ | ------------------------ | ----------------------- | ---------------------------------- |
 | .TFLITE      | 328.11 MB                | 8.00 s                  | 0.45 s                             |
