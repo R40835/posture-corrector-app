@@ -65,6 +65,19 @@ LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1
 
 </div>
 
+# Monitoring Perspectives
+Once the monitoring script is running, and the authentication is complete on the jetson nano side, the user is prompt to choose an angle to be monitored from, there are 3 options:
+1. Lateral Right
+2. Frontal
+3. Lateral Left
+
+<div style="display: flex; justify-content: center;"> 
+    <img src="https://github.com/R40835/posture-corrector-app/blob/main/assets/perspectives.PNG?raw=true" style="width: 30%;" />
+    <img src="https://github.com/R40835/posture-corrector-app/blob/main/assets/perspectives2.PNG?raw=true" style="width: 30%;" />
+    <img src="https://github.com/R40835/posture-corrector-app/blob/main/assets/moveNet.PNG?raw=true" style="width: 15%;" />
+
+</div>
+
 # Contributing
 Contributions to the Posture Corrector App are welcome! If you have any ideas, bug fixes, or improvements, please submit a pull request. Make sure to follow the established coding style and guidelines.
 
