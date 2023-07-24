@@ -88,8 +88,8 @@ class PostureCorrectorTrt(ModelTrt):
         ls = self.parts_coordinates['left_shoulder']
         rs = self.parts_coordinates['right_shoulder']
 
-        right_shoulder_angle = self.angle_calculator(p1=n, p2=rs, p3=ls)
-        left_shoulder_angle = self.angle_calculator(p1=n, p2=ls, p3=rs)
+        right_shoulder_angle = self._angle_calculator(p1=n, p2=rs, p3=ls)
+        left_shoulder_angle = self._angle_calculator(p1=n, p2=ls, p3=rs)
 
         # 325 is the same angle threshold as 35 it is just inverted
         if (35 < right_shoulder_angle) & (left_shoulder_angle < 325):
@@ -126,12 +126,12 @@ class PostureCorrectorTrt(ModelTrt):
         nose = self.parts_coordinates['nose']
 
         # calculating distances between shoulders and hips
-        left_shoulder_hip_dist = self.euclidian_distance(x1=ls[0], x2=lh[0], y1=ls[1], y2=lh[1])
-        right_shoulder_hip_dist = self.euclidian_distance(x1=rs[0], x2=rh[0], y1=rs[1], y2=rh[1])
+        left_shoulder_hip_dist = self._euclidean_distance(x1=ls[0], x2=lh[0], y1=ls[1], y2=lh[1])
+        right_shoulder_hip_dist = self._euclidean_distance(x1=rs[0], x2=rh[0], y1=rs[1], y2=rh[1])
         shoulder_hip_dist = left_shoulder_hip_dist + right_shoulder_hip_dist
         # calculating distances between nose and hips
-        left_nose_hip_dist = self.euclidian_distance(x1=nose[0], x2=lh[0], y1=nose[1], y2=lh[1]) 
-        right_nose_hip_dist = self.euclidian_distance(x1=nose[0], x2=rh[0], y1=nose[1], y2=rh[1]) 
+        left_nose_hip_dist = self._euclidean_distance(x1=nose[0], x2=lh[0], y1=nose[1], y2=lh[1]) 
+        right_nose_hip_dist = self._euclidean_distance(x1=nose[0], x2=rh[0], y1=nose[1], y2=rh[1]) 
         nose_hip_dist = left_nose_hip_dist + right_nose_hip_dist
 
         # compare the distances
@@ -156,7 +156,7 @@ class PostureCorrectorTrt(ModelTrt):
         # lateral right
         if self.__CAMERA_POSITION == 1:
             # right hip angle
-            right_hip_angle = self.angle_calculator(p1=rs, p2=rh, p3=rk)
+            right_hip_angle = self._angle_calculator(p1=rs, p2=rh, p3=rk)
 
             if 90 < right_hip_angle < 115: 
                 self.__back_status = np.append(self.__back_status, 'upright back') 
@@ -171,7 +171,7 @@ class PostureCorrectorTrt(ModelTrt):
         # lateral left
         elif self.__CAMERA_POSITION == 3:
             # left hip angle same angles are used as thresholds there just inverted
-            left_hip_angle = self.angle_calculator(p1=ls, p2=lh, p3=lk)
+            left_hip_angle = self._angle_calculator(p1=ls, p2=lh, p3=lk)
 
             if 245 < left_hip_angle < 270: 
                 self.__back_status = np.append(self.__back_status, 'upright back') 
@@ -234,7 +234,7 @@ class PostureCorrectorTrt(ModelTrt):
         self.__photos_counter += 1
 
     @staticmethod
-    def angle_calculator(p1: np.ndarray, p2: np.ndarray, p3: np.ndarray) -> float:
+    def _angle_calculator(p1: np.ndarray, p2: np.ndarray, p3: np.ndarray) -> float:
         '''
         computes angle for three given points and returns the angle in degrees.
 
@@ -256,7 +256,7 @@ class PostureCorrectorTrt(ModelTrt):
         return angle
 
     @staticmethod
-    def euclidian_distance(x1: float, y1: float, x2: float, y2: float) -> float:
+    def _euclidean_distance(x1: float, y1: float, x2: float, y2: float) -> float:
         '''
         computes distance between 2 cartesian points.
 
