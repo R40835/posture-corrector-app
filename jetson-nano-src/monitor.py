@@ -1,8 +1,10 @@
-from posture_corrector_api import PostureCorrectorTrt, draw_connections, draw_keypoints, authenticate_user
+from posture_corrector_api import PostureCorrectorTrt, draw_connections, draw_keypoints, authenticate_user, \
+CameraException, PhotosUploadException, FolderCleaningException, DatabaseUpdateException
 import numpy as np
-import cv2
 import getpass
 import time
+import cv2
+import os
 
 
 def main():
@@ -57,10 +59,14 @@ def main():
                                fps=30, 
                                duration=10
                                )
-    # Open the CS2 camera and start capturing frames
-    cap = cv2.VideoCapture("nvarguscamerasrc ! video/x-raw(memory:NVMM),width=3280,height=2464,format=NV12,framerate=21/1 \
-                            ! nvvidconv flip-method=2 ! video/x-raw, width=(int)640, height=(int)480, format=(string)BGRx \
-                        ! videoconvert ! video/x-raw, format=(string)BGR ! appsink")
+    try: 
+        # Open the CS2 camera and start capturing frames
+        cap = cv2.VideoCapture("nvarguscamerasrc ! video/x-raw(memory:NVMM),width=3280,height=2464,format=NV12,framerate=21/1 \
+                                ! nvvidconv flip-method=2 ! video/x-raw, width=(int)640, height=(int)480, format=(string)BGRx \
+                            ! videoconvert ! video/x-raw, format=(string)BGR ! appsink")
+    except:
+        raise CameraException("No camera module detected on your device. Please make sure your camera is connected.")
+        
     while cap.isOpened():
         ret, frame = cap.read()
 
@@ -78,7 +84,7 @@ def main():
         # detection of the current posture
         user.monitor_posture()
         # update frames for photos if incorrect postures last 10 seconds
-        user.frame = frame #TODO: GETTER AND SETTER
+        user.frame = frame 
         # render neck and back postures on frames
         if len(user.back_status) > 1:
             text = f"back posture: {user.back_status[-1]}"
@@ -100,17 +106,36 @@ def main():
 
     # exceptions handling
     try:
-        user.app.upload_photos()
-    except:
-        print('No photos existing')
-    try:
-        user.app.clean_folder()
-    except:
-        print('Couldn\'t clean folder')
-    try:
-        user.app.update_database(end_time)
-    except:
-        print('Couldn\'t update database')
+        upload_photos = user.app.upload_photos() 
+        if upload_photos != "Files uploaded successfully." and upload_photos != "No incorrect postures":
+            raise PhotosUploadException("The incorrect posture photos captured during the video weren't sent to the app.")
+        
+    except PhotosUploadException as e:
+        print(f"Error uploading photos: {e}")
+    except Exception as e:
+        print(f"Unexpected error while uploading photos: {e}")
+    else:
+        try:
+            user.app.clean_folder()
+            folder_path = 'incorrect_postures/'
+            empty_folder = True if len(os.listdir(folder_path)) == 0 else False 
+            if not empty_folder:
+                raise FolderCleaningException("Either you don't have an empty folder named incorrect_postures under the root directory, or the photos weren't deleted.")
+            
+        except FolderCleaningException as e:
+            print(f"Error cleaning folder: {e}")
+        except Exception as e:
+            print(f"Unexpected error while cleaning folder: {e}")
+        else:
+            try:
+                update_database = user.app.update_database(end_time)
+                if update_database != "success":
+                    raise DatabaseUpdateException("The data collected to assess your posture during the video weren't sent to the app.")
+                
+            except DatabaseUpdateException as e:
+                print(f"Error updating database: {e}")
+            except Exception as e:
+                print(f"Unexpected error while updating database: {e}")
 
 if __name__ == '__main__':
     main()

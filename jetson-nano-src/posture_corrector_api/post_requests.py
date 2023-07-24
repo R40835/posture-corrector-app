@@ -1,3 +1,4 @@
+import numpy as np 
 import requests 
 import json
 import time
@@ -31,7 +32,7 @@ class DjangoAppSession:
     @total_alerts.setter
     def total_alerts(self, value: int) -> None:
         self.__total_alerts += value
-    
+ 
     def notify_user(self, alert_type: str) -> None:
         '''sending a notification to the user to straighten up through a post request'''
 
@@ -45,24 +46,31 @@ class DjangoAppSession:
         response = requests.post(url, data=data)
         print(response.json()['status'])
 
-    def upload_photos(self) -> None:
+    def upload_photos(self) -> str:
         '''uploads photos of incorrect postures detected during the monitoring video'''
+        
+        folder_path = 'incorrect_postures/'
+        if len(os.listdir(folder_path)) == 0: return "No incorrect postures"
 
+        responses = []
         url = 'http://' + self.__url + ':'+ self.__port + '/main/user-incorrect-postures/'
         data = {
             'email': self.__email,
             'password': self.__password
-        }
-        folder_path = 'incorrect_postures/'
+        } 
+
         for filename in os.listdir(folder_path):
             file_path = os.path.join(folder_path, filename)
             if os.path.isfile(file_path):
                 with open(file_path, 'rb') as f:
                     files = {'image': f}
                     response = requests.post(url, data=data, files=files)
-                    print(response.text)
+                    responses.append(response.text)
+        responses = np.unique(np.array(responses))
 
-    def update_database(self, end_time: int) -> None:
+        if len(responses) == 1: return responses[0]            
+
+    def update_database(self, end_time: int) -> str:
         '''sends a user's posture data to the django app so that it could be stored in the database'''
 
         url = 'http://' + self.__url + ':'+ self.__port + '/main/video-data/'
@@ -77,10 +85,10 @@ class DjangoAppSession:
             'incorrect_postures':json.dumps(self.__incorrect_postures),
             }
         response = requests.post(url, data=data)
-        print(response.json()['status'])
+        return response.json()['status']
 
     @staticmethod
-    def clean_folder():
+    def clean_folder() -> None:
         '''deletes all images captured and sent as they are stored in the app's db'''
 
         folder_path = 'incorrect_postures/'
