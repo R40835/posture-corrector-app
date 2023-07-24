@@ -41,7 +41,6 @@ class DjangoAppSession:
             'email':self.__email,
             'password':self.__password,
             'alert':alert_type, 
-            'back_postures' : 'reclined'
             }
         response = requests.post(url, data=data)
         print(response.json()['status'])
