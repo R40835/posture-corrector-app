@@ -17,7 +17,6 @@ class PostureCorrectorTrt(ModelTrt):
 
     def __init__(self, url: str, port:str, email: str, password: str, camera_position: int=1, fps: int=30, duration: int=10):
         super().__init__()
-        
         self.__duration = duration 
         self.__num_frames = int(self.__duration * fps) / 2
         self.__CAMERA_POSITION = camera_position
@@ -28,11 +27,11 @@ class PostureCorrectorTrt(ModelTrt):
         self.__neck_counter = 0
         self.__frame = None
         self.__app = DjangoAppSession(
-                                      url=url,
-                                      port=port,
-                                      email=email,
-                                      password=password 
-                                      )
+            url=url,
+            port=port,
+            email=email,
+            password=password 
+        )
 
     @property
     def frame(self) -> np.ndarray:
