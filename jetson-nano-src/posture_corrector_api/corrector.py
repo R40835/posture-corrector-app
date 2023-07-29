@@ -16,7 +16,7 @@ class PostureCorrectorTrt(ModelTrt):
     '''
 
     def __init__(self, url: str, port:str, email: str, password: str, camera_position: int=1, fps: int=30, duration: int=10):
-        super().__init__()
+        super(PostureCorrectorTrt, self).__init__()
         self.__duration = duration 
         self.__num_frames = int(self.__duration * fps) / 2
         self.__CAMERA_POSITION = camera_position
@@ -224,7 +224,7 @@ class PostureCorrectorTrt(ModelTrt):
             if counter_type == 'back':
                 self.__app.incorrect_postures = self.__back_status[-1] #push in last item
             elif counter_type == 'neck':
-                self.__app.incorrect_postures = self.__neck_status[-1] #TODO: IM USING SETTERS
+                self.__app.incorrect_postures = self.__neck_status[-1] 
 
     def _photo(self, frame: np.ndarray) -> None:
         '''stores the last video frame when the user's posture is incorrect for 10 seconds'''
