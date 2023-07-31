@@ -1,46 +1,61 @@
 from abc import ABC, abstractmethod
 import numpy as np
-# for the first version (.tflite)
 import tensorflow as tf
-# for the second version (.onnx)
 import onnxruntime as ort
-# for the last version (.trt)
 import tensorrt as trt
 import pycuda.driver as cuda
 import pycuda.autoinit
+import os
+import sys
+
+# setting up module search path for testing purposes
+# Get the path to the directory containing the tests.py script
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# # Get the path to the parent directory (one level up from current_dir)
+parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
+
+# Add the current directory to the module search path
+sys.path.append(parent_dir)
+
+# Create file paths
+trt_path = os.path.join(current_dir, "models", "movenet_v3.trt")
+onnx_path = os.path.join(current_dir, "models", "movenet_v2.onnx")
+tflite_path = os.path.join(current_dir, "models", "movenet_v1.tflite")
 
 
 class MoveNet(ABC):
     keypoints_with_scores = None
     parts_coordinates = {
-            'nose': None,
-            'left_eye': None,
-            'right_eye': None,
-            'left_ear': None,
-            'right_ear': None,
-            'left_shoulder': None,
-            'right_shoulder': None,
-            'left_elbow': None,
-            'right_elbow': None,
-            'left_wrist': None,
-            'right_wrist': None,
-            'left_hip': None,
-            'right_hip': None,
-            'left_knee': None,
-            'right_knee': None,
-            'left_ankle': None,
-            'right_ankle': None
-        }
+        'nose': None,
+        'left_eye': None,
+        'right_eye': None,
+        'left_ear': None,
+        'right_ear': None,
+        'left_shoulder': None,
+        'right_shoulder': None,
+        'left_elbow': None,
+        'right_elbow': None,
+        'left_wrist': None,
+        'right_wrist': None,
+        'left_hip': None,
+        'right_hip': None,
+        'left_knee': None,
+        'right_knee': None,
+        'left_ankle': None,
+        'right_ankle': None
+    }
     
     @abstractmethod
     def detect(self, input_image: np.ndarray) -> None:
         pass 
 
-
+# 'posture_corrector_api/models/movenet_v1.tflite'
 class ModelTflite(MoveNet):
     def __init__(self):
         # load the TFLITE model
-        self.interpreter = tf.lite.Interpreter(model_path='posture_corrector_api/models/movenet_v1.tflite') 
+        self.interpreter = tf.lite.Interpreter(
+            model_path=tflite_path
+        ) 
         self.interpreter.allocate_tensors()
         # Setup input and output 
         self.input_details = self.interpreter.get_input_details()
@@ -68,17 +83,20 @@ class ModelTflite(MoveNet):
 
         # updatting dictionary coordinates
         for idx, part in enumerate(self.parts_coordinates):
-            self.parts_coordinates[part] = coordinates[idx]
+            self.parts_coordinates[part] = np.array(list(coordinates[idx]))
 
 
 class ModelOnnx(MoveNet):
     def __init__(self):
         # Load the ONNX model
-        self.sess = ort.InferenceSession('posture_corrector_api/models/movenet_v2.onnx', 
-                                         providers=['TensorrtExecutionProvider', 
-                                                    'CUDAExecutionProvider', 
-                                                    'CPUExecutionProvider']
-                                        )
+        self.sess = ort.InferenceSession(
+            onnx_path, 
+            providers=[
+                'TensorrtExecutionProvider', 
+                'CUDAExecutionProvider', 
+                'CPUExecutionProvider'
+            ]
+        )
         # Get the input and output tensor names
         self.input_name = self.sess.get_inputs()[0].name
         self.output_name = self.sess.get_outputs()[0].name
@@ -104,14 +122,14 @@ class ModelOnnx(MoveNet):
 
         # updatting dictionary coordinates
         for idx, part in enumerate(self.parts_coordinates):
-            self.parts_coordinates[part] = coordinates[idx]
+            self.parts_coordinates[part] = np.array(list(coordinates[idx]))
 
         
 class ModelTrt(MoveNet):
     def __init__(self):
         # Load the TensorRT model engine
         # Load the serialized engine from file
-        with open('posture_corrector_api/models/movenet_v3.trt', 'rb') as f:
+        with open(trt_path, 'rb') as f:
             engine_data = f.read()
         self._runtime = trt.Runtime(trt.Logger(trt.Logger.WARNING))
         self._engine = self._runtime.deserialize_cuda_engine(engine_data)
@@ -134,22 +152,25 @@ class ModelTrt(MoveNet):
 
         # Copy the input data to the device
         cuda.memcpy_htod_async(
-                               self._input_buf, 
-                               input_image, 
-                               self._stream
-                               )
+            self._input_buf, 
+            input_image, 
+            self._stream
+        )
         # Run inference
         self._context.execute_async_v2(
-                                        bindings=[int(self._input_buf), int(self._output_buf)], 
-                                        stream_handle=self._stream.handle
-                                       )
+            bindings=[
+                int(self._input_buf), 
+                int(self._output_buf)
+            ], 
+            stream_handle=self._stream.handle
+        )
         # Copy the output data back to the host
         self.keypoints_with_scores = np.empty(self._output_shape, dtype=np.float32)
         cuda.memcpy_dtoh_async(
-                               self.keypoints_with_scores, 
-                               self._output_buf, 
-                               self._stream
-                               )
+            self.keypoints_with_scores, 
+            self._output_buf, 
+            self._stream
+        )
         # Wait for the CUDA stream to finish
         self._stream.synchronize()
         # updating coordinates
@@ -158,6 +179,7 @@ class ModelTrt(MoveNet):
         kpts_y = self.keypoints_with_scores[0, :, 0]
         # zipping x and y coordinates
         coordinates = list(zip(kpts_x, kpts_y))
+
         # updatting dictionary coordinates
         for idx, part in enumerate(self.parts_coordinates):
-            self.parts_coordinates[part] = coordinates[idx]
+            self.parts_coordinates[part] = np.array(list(coordinates[idx]))
