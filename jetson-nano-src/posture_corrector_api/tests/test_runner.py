@@ -1,5 +1,4 @@
 from test_imports import(
-    ModelPerformance,
     CameraException,
     draw_connections, 
     draw_keypoints
@@ -55,7 +54,6 @@ def main():
             fps=30,
             duration=10
         )
-        metrics = ModelPerformance(model="TFLITE")
 
     elif version_choice == 2:
         # Version 2: using the moveNet model optimised to onnx
@@ -64,7 +62,6 @@ def main():
             fps=30,
             duration=10
         )
-        metrics = ModelPerformance(model="ONNX")
 
     elif version_choice == 3:
         # Version 3: using the moveNet Model optimised to trt
@@ -73,9 +70,6 @@ def main():
             fps=30, 
             duration=10
         )     
-        metrics = ModelPerformance(model="TRT")
-
-    metrics.get_memory_info()
 
     # Open the CS2 camera and start capturing frames
     try:
