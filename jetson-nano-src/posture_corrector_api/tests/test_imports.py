@@ -12,7 +12,6 @@ sys.path.append(parent_dir)
 
 # import classes ModelTrt,
 from movenet_models import  ModelTrt, ModelOnnx, ModelTflite
-from performance_metrics import ModelPerformance
 from utils import draw_connections, draw_keypoints
 from exceptions import CameraException
 from optimised_computations import cpp_functions 
