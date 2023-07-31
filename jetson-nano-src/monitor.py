@@ -1,5 +1,13 @@
-from posture_corrector_api import PostureCorrectorTrt, draw_connections, draw_keypoints, authenticate_user, \
-CameraException, PhotosUploadException, FolderCleaningException, DatabaseUpdateException
+from posture_corrector_api import (
+    PostureCorrectorTrt, 
+    draw_connections, 
+    draw_keypoints, 
+    authenticate_user,
+    CameraException, 
+    PhotosUploadException, 
+    FolderCleaningException, 
+    DatabaseUpdateException
+)
 import numpy as np
 import getpass
 import time
@@ -51,14 +59,14 @@ def main():
 
     # creating an instance of the class defined in corrector.py
     user = PostureCorrectorTrt(
-                               url=url, 
-                               port=port,
-                               email=email, 
-                               password=password,
-                               camera_position=camera_position, 
-                               fps=30, 
-                               duration=10
-                               )
+        url=url, 
+        port=port,
+        email=email, 
+        password=password,
+        camera_position=camera_position, 
+        fps=30, 
+        duration=10
+    )
     try: 
         # Open the CS2 camera and start capturing frames
         cap = cv2.VideoCapture("nvarguscamerasrc ! video/x-raw(memory:NVMM),width=3280,height=2464,format=NV12,framerate=21/1 \
