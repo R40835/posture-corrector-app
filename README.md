@@ -83,8 +83,8 @@ Some of the body key joints detected by the moveNet model are used in order to d
 The original model was in the form of a Tensorflow-lite file, that was optimised to an ONNX file, and then to a TensorRT engine in order to speed up the inference. The following table shows the performance of each model on the Jetson Nano:
 | Model Format     | Memory Usage (megabytes) | Video Latency (seconds) | Inference Time per Frame (seconds) |
 | ---------------- | ------------------------ | ----------------------- | ---------------------------------- |
-| TFLITE file      | 328.11 MB                | 8.00 s                  | 0.45 s                             |
-| ONNX file        | 98.06 MB                 | 6.00 s                  | 0.36 s                             |
+| TFLITE file      | 328.11 MB                | 5.78 s                  | 0.45 s                             |
+| ONNX file        | 98.06 MB                 | 4.8 s                   | 0.36 s                             |
 | TRT file         | 156.86 MB                | 0.5 s                   | 0.043 s                            |
 
 # Contributing
