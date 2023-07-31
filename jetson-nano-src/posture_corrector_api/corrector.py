@@ -1,5 +1,6 @@
 from .movenet_models import ModelTrt
 from .post_requests import DjangoAppSession
+from .optimised_computations import cpp_functions
 import numpy as np
 import math
 import cv2
@@ -14,7 +15,9 @@ class PostureCorrectorTrt(ModelTrt):
     * This runs only on the Jetson Nanos as the optimised model file (movenet_v3.trt) is tailored to the Jetson Nano's 
     GPU architecture.
     '''
-
+    _euclidean_distance = staticmethod(cpp_functions.euclidean_distance)
+    _angle_calculator = staticmethod(cpp_functions.angle_calculator)
+    
     def __init__(self, url: str, port:str, email: str, password: str, camera_position: int=1, fps: int=30, duration: int=10):
         super(PostureCorrectorTrt, self).__init__()
         self.__duration = duration 
@@ -232,36 +235,3 @@ class PostureCorrectorTrt(ModelTrt):
         cv2.imwrite("incorrect_postures/incorrect_posture_{}.jpg".format(self.__photos_counter), frame)
         self.__photos_counter += 1
 
-    @staticmethod
-    def _angle_calculator(p1: np.ndarray, p2: np.ndarray, p3: np.ndarray) -> float:
-        '''
-        computes angle for three given points and returns the angle in degrees.
-
-        :param p1: first point
-        :param p2: second point (target)
-        :param p3: third point
-        '''
-        # unpacking arrays to get the coordinates
-        x1, y1 = p1
-        x2, y2 = p2 
-        x3, y3 = p3
-
-        # calculating angle
-        angle = math.degrees(math.atan2(y3 - y2, x3 - x2) - math.atan2(y1 - y2, x1 - x2))
-
-        # converting negative angles to positive
-        if angle < 0:
-            return angle + 360
-        return angle
-
-    @staticmethod
-    def _euclidean_distance(x1: float, y1: float, x2: float, y2: float) -> float:
-        '''
-        computes distance between 2 cartesian points.
-
-        :param x1: x coordinate for first point
-        :param y1: y coordinate for first point
-        :param x2: x coordinate for second point
-        :param y2: y coordinate for second point
-        '''
-        return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
