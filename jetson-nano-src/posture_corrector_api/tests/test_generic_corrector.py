@@ -1,6 +1,5 @@
-from test_imports import cpp_functions
+from test_imports import cpp_functions, Buffers 
 import numpy as np
-import math
 import time 
 
 
@@ -10,22 +9,27 @@ class GenericCorrector:
     _angle_calculator = staticmethod(cpp_functions.angle_calculator)
 
     def __init__(self, camera_position: int=1, fps: int=30, duration: int=10):
-
+        self.__forward = b'f'[0] # 102
+        self.__upright = b'u'[0] # 117
+        self.__reclined = b'r'[0] # 114
         self.__duration = duration
-        self.__num_frames = int(self.__duration * fps) / 2
+        self.__num_frames = int(self.__duration * fps/ 2)
         self.__CAMERA_POSITION = camera_position
-        self.__neck_status = np.array([])
-        self.__back_status = np.array([])
-        self.__back_counter = 0
-        self.__neck_counter = 0
+        self.__neck_buffer = Buffers.PyNeckCircularBuffer(self.__num_frames)
+        self.__back_buffer = Buffers.PyBackCircularBuffer(self.__num_frames)
 
     @property
-    def neck_status(self) -> np.ndarray:
-        return self.__neck_status
-    
+    def neck_posture(self) -> str:
+        buffer = self.__neck_buffer.getBuffer()
+        if len(buffer) > 0 and buffer[0] == 102: return "forward-leaning neck"
+        if len(buffer) > 0 and buffer[0] == 117: return "upright neck"
+           
     @property
-    def back_status(self) -> np.ndarray:
-        return self.__back_status
+    def back_posture(self) -> str:
+        buffer = self.__back_buffer.getBuffer()
+        if len(buffer) > 0 and buffer[0] == 102: return "forward-leaning back"
+        if len(buffer) > 0 and buffer[0] == 117: return "upright back"
+        if len(buffer) > 0 and buffer[0] == 114: return "reclined back"
 
     def monitor_posture(self, parts_coordinates: dict) -> None:
         '''
@@ -36,21 +40,35 @@ class GenericCorrector:
         '''
         # lateral right or left posture correction
         if (self.__CAMERA_POSITION == 1) | (self.__CAMERA_POSITION == 3):
-            neck_state = self._lateral_neck_corrector(parts_coordinates)
-            back_state = self._lateral_back_corrector(parts_coordinates)
-        
-            self._timer(back_state, self.__num_frames, 'back')
-            self._timer(neck_state, self.__num_frames, 'neck')
+            # reinitialise buffer here and work out the logic for the timer here as well
+            self._lateral_neck_corrector(parts_coordinates)
+            self._lateral_back_corrector(parts_coordinates)
+            if self.__back_buffer.maxIncorrectReached():
+                print("notify user here and now!")
+                print(self.__back_buffer.getIncorrectPosture())
+                print('back-alert')
+                time.sleep(5)
+            if self.__neck_buffer.maxIncorrectReached():
+                print("notify user here and now!")
+                print(self.__neck_buffer.getIncorrectPosture())
+                print('neck-alert')
+                time.sleep(5)
 
         elif self.__CAMERA_POSITION == 2 : 
-            neck_state = self._frontal_neck_corrector(parts_coordinates)
-            back_state = self._frontal_back_corrector(parts_coordinates)
-                
+            
+            self._frontal_neck_corrector(parts_coordinates)
+            self._frontal_back_corrector(parts_coordinates)
             # checking if 10 seconds were spent in a poor posture
-            self._timer(back_state, self.__num_frames, 'back')
-            self._timer(neck_state, self.__num_frames, 'neck')
-
-    def _frontal_neck_corrector(self, parts_coordinates: dict) -> int:
+            if self.__back_buffer.maxIncorrectReached():
+                print("notify user here and now!")
+                print(self.__back_buffer.getIncorrectPosture)
+                time.sleep(5)
+            if self.__neck_buffer.maxIncorrectReached():
+                print("notify user here and now!")
+                print(self.__neck_buffer.getIncorrectPosture())
+                time.sleep(5)
+            
+    def _frontal_neck_corrector(self, parts_coordinates: dict) -> None:
         '''checks correct neck posture returns 0 for incorrect and 1 for correct posture'''
 
         n = parts_coordinates['nose']
@@ -62,12 +80,11 @@ class GenericCorrector:
 
         # 325 is the same angle threshold as 35 it is just inverted
         if (35 < right_shoulder_angle) & (left_shoulder_angle < 325):
-            self.__neck_status = np.append(self.__neck_status, 'upright neck')
-            return 1
-        self.__neck_status = np.append(self.__neck_status, 'forward-leaning neck')
-        return 0
+            self.__neck_buffer.addPosture(self.__upright)
+        else:
+            self.__neck_buffer.addPosture(self.__forward)
 
-    def _lateral_neck_corrector(self, parts_coordinates: dict) -> int:
+    def _lateral_neck_corrector(self, parts_coordinates: dict) -> None:
         '''checks correct neck posture returns 0 for incorrect and 1 for correct posture'''
 
         nose_y = parts_coordinates['nose'][1]
@@ -77,14 +94,12 @@ class GenericCorrector:
         # Compare the y-coordinates to determine if the subject is sat upright
         # We'll use a range of 10 pixels to allow for some variability in how people sit on chairs
         if (abs(nose_y - left_shoulder_y) < .08) & (abs(nose_y - right_shoulder_y) < .08):
-            self.__neck_status = np.append(self.__neck_status, 'forward-leaning neck') 
-            return 0
-        
-        # storing neck posture result
-        self.__neck_status = np.append(self.__neck_status, 'upright neck') 
-        return 1
+            self.__neck_buffer.addPosture(self.__forward)
+        else:
+            # storing neck posture result
+            self.__neck_buffer.addPosture(self.__upright) 
     
-    def _frontal_back_corrector(self, parts_coordinates: dict) -> int:
+    def _frontal_back_corrector(self, parts_coordinates: dict) -> None:
         '''checks correct back posture returns 0 for incorrect and 1 for correct posture'''
         
         # coordinates of left and right shoulders, left and right hips, and nose
@@ -105,13 +120,11 @@ class GenericCorrector:
 
         # compare the distances
         if nose_hip_dist < shoulder_hip_dist:
-            self.__back_status = np.append(self.__back_status, 'froward-leaning back') 
-            return 0
+            self.__back_buffer.addPosture(self.__forward)
         elif nose_hip_dist > shoulder_hip_dist:
-            self.__back_status = np.append(self.__back_status, 'upright back') 
-            return 1
+            self.__back_buffer.addPosture(self.__upright) 
             
-    def _lateral_back_corrector(self, parts_coordinates: dict) -> int:
+    def _lateral_back_corrector(self, parts_coordinates: dict) -> None:
         '''checks correct back posture returns 0 for incorrect and 1 for correct posture'''
 
         # retrieving coordinates arrays of relevant body parts
@@ -128,14 +141,11 @@ class GenericCorrector:
             right_hip_angle = self._angle_calculator(p1=rs, p2=rh, p3=rk)
 
             if 90 < right_hip_angle < 115: 
-                self.__back_status = np.append(self.__back_status, 'upright back') 
-                return 1
+                self.__back_buffer.addPosture(self.__upright)
             elif right_hip_angle < 90: 
-                self.__back_status = np.append(self.__back_status, 'froward-leaning back') 
-                return 0
+                self.__back_buffer.addPosture(self.__forward)
             elif right_hip_angle > 115: 
-                self.__back_status = np.append(self.__back_status, 'reclined back') 
-                return 0
+                self.__back_buffer.addPosture(self.__reclined)
             
         # lateral left
         elif self.__CAMERA_POSITION == 3:
@@ -143,47 +153,8 @@ class GenericCorrector:
             left_hip_angle = self._angle_calculator(p1=ls, p2=lh, p3=lk)
 
             if 245 < left_hip_angle < 270: 
-                self.__back_status = np.append(self.__back_status, 'upright back') 
-                return 1
+                self.__back_buffer.addPosture(self.__upright)
             elif left_hip_angle < 245: 
-                self.__back_status = np.append(self.__back_status, 'reclined back') 
-                return 0
+                self.__back_buffer.addPosture(self.__reclined)
             elif left_hip_angle > 270: 
-                self.__back_status = np.append(self.__back_status, 'forward-leaning back') 
-                return 0
-
-    def _timer(self, current_status: int, num_frames: int, counter_type: str) -> None:
-        '''
-        triggers the alarm on the user interface, and store the incorrect posture
-        sustained by the user for 10 seconds
-        
-        :param current_status: 1 or 0 for proper or improper posture
-        :param num_frames: the number of frames to be processed 
-            for the timer to send a notification
-        :param counter_type: back or neck
-        '''
-        # If the current status is the same as the previous status, increment the counter
-        if counter_type == 'back':
-            counter = self.__back_counter
-        elif counter_type == 'neck':
-            counter = self.__neck_counter
-
-        if current_status == 0:
-            counter += 1
-        else:
-            # If the current status is different from the previous status, reset the counter
-            counter = 0
-
-        # Set the correct counter
-        if counter_type == 'back':
-            self.__back_counter = counter
-        elif counter_type == 'neck':
-            self.__neck_counter = counter
-
-        # If the counter reaches the specified number of frames, perform the desired action
-        if counter == num_frames:
-
-            if counter_type == 'back':
-                print('straighten up your back')
-            elif counter_type == 'neck':
-                print('straighten up your neck')
+                self.__back_buffer.addPosture(self.__forward)

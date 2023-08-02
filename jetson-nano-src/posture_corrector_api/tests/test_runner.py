@@ -4,7 +4,7 @@ from test_imports import(
     draw_keypoints
 )
 from test_correctors import (
-    TestCorrectorTrt,
+    TestCorrectorTrt, 
     TestCorrectorOnnx, 
     TestCorrectorTflite,
 )
@@ -22,7 +22,7 @@ def processing_tflite(frame: np.ndarray) -> np.ndarray:
 
 
 def processing_onnx(frame: np.ndarray) -> np.ndarray:
-    # Reshape the image
+    # Reshape image
     img = cv2.resize(frame, (256, 256))
     img = img.astype(np.float32)
     # Add batch dimension to input image
@@ -31,7 +31,7 @@ def processing_onnx(frame: np.ndarray) -> np.ndarray:
 
 
 def processing_trt(frame: np.ndarray) -> np.ndarray:
-    # Preprocess the input image
+    # Preprocess image
     img = cv2.resize(frame, (256, 256))
     img = img.astype(np.float32)
     input_image = np.expand_dims(img, axis=0)
@@ -100,16 +100,15 @@ def main():
         user.monitor_posture()
 
         # render neck and back postures on frames
-        if len(user.back_status) > 1:
-            text = f"back posture: {user.back_status[-1]}"
-            cv2.putText(frame, text, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
-        if len(user.neck_status) > 1:
-            text2 = f"neck posture: {user.neck_status[-1]}"
-            cv2.putText(frame, text2, (50, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2) 
+        text = f"back posture: {user.back_posture}"
+        cv2.putText(frame, text, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
+
+        text2 = f"neck posture: {user.neck_posture}"
+        cv2.putText(frame, text2, (50, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2) 
 
         frames_count += 1
         # pop up monitoring screen
-        cv2.imshow('trt', frame)
+        cv2.imshow('monitor', frame)
 
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break

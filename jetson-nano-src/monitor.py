@@ -1,8 +1,8 @@
 from posture_corrector_api import (
-    PostureCorrectorTrt, 
+    PostureCorrectorTrt,
     draw_connections, 
     draw_keypoints, 
-    authenticate_user,
+    authenticate_user, 
     CameraException, 
     PhotosUploadException, 
     FolderCleaningException, 
@@ -94,15 +94,14 @@ def main():
         # update frames for photos if incorrect postures last 10 seconds
         user.frame = frame 
         # render neck and back postures on frames
-        if len(user.back_status) > 1:
-            text = f"back posture: {user.back_status[-1]}"
-            cv2.putText(frame, text, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
-        if len(user.neck_status) > 1:
-            text2 = f"neck posture: {user.neck_status[-1]}"
-            cv2.putText(frame, text2, (50, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2) 
+        text = f"back posture: {user.back_posture}"
+        cv2.putText(frame, text, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
+
+        text2 = f"neck posture: {user.neck_posture}" 
+        cv2.putText(frame, text2, (50, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2) 
 
         # pop up monitoring screen
-        cv2.imshow('trt', frame)
+        cv2.imshow('monitor', frame)
 
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
@@ -117,7 +116,6 @@ def main():
         upload_photos = user.app.upload_photos() 
         if upload_photos != "Files uploaded successfully." and upload_photos != "No incorrect postures":
             raise PhotosUploadException("The incorrect posture photos captured during the video weren't sent to the app.")
-        
     except PhotosUploadException as e:
         print(f"Error uploading photos: {e}")
     except Exception as e:
@@ -129,7 +127,6 @@ def main():
             empty_folder = True if len(os.listdir(folder_path)) == 0 else False 
             if not empty_folder:
                 raise FolderCleaningException("Either you don't have an empty folder named incorrect_postures under the root directory, or the photos weren't deleted.")
-            
         except FolderCleaningException as e:
             print(f"Error cleaning folder: {e}")
         except Exception as e:
@@ -139,7 +136,6 @@ def main():
                 update_database = user.app.update_database(end_time)
                 if update_database != "success":
                     raise DatabaseUpdateException("The data collected to assess your posture during the video weren't sent to the app.")
-                
             except DatabaseUpdateException as e:
                 print(f"Error updating database: {e}")
             except Exception as e:
