@@ -67,7 +67,7 @@ def main():
         # Version 3: using the moveNet Model optimised to trt
         user = TestCorrectorTrt(
             camera_position=camera_position, 
-            fps=30, 
+            fps=17, 
             duration=10
         )     
 

@@ -35,7 +35,7 @@ def upload_posture_photos(request):
                 posture.save()
 
             # Return a response indicating success
-            return HttpResponse('Files uploaded successfully.')
+            return HttpResponse('success')
         else:
             # Return a response indicating failure
             return HttpResponse('No files uploaded.')

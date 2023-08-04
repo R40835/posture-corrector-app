@@ -20,7 +20,7 @@ class PostureCorrectorTrt(ModelTrt):
     _euclidian_distance = staticmethod(cpp_functions.euclidean_distance)
     _angle_calculator = staticmethod(cpp_functions.angle_calculator)
 
-    def __init__(self, url: str, port:str, email: str, password: str, camera_position: int=1, fps: int=30, duration: int=10):
+    def __init__(self, url: str, port:str, email: str, password: str, camera_position: int=1, fps: int=17, duration: int=10):
         super(PostureCorrectorTrt, self).__init__()
         self.__frame = None
         self.__photos_counter = 0
@@ -29,7 +29,7 @@ class PostureCorrectorTrt(ModelTrt):
         self.__reclined = b'r'[0] # 114
         self.__duration = duration 
         self.__CAMERA_POSITION = camera_position
-        self.__num_frames = int(self.__duration * fps / 2) 
+        self.__num_frames = int(self.__duration * fps) 
         self.__neck_buffer = Buffers.PyNeckCircularBuffer(self.__num_frames)
         self.__back_buffer = Buffers.PyBackCircularBuffer(self.__num_frames)
         self.__app = DjangoAppSession(
@@ -184,7 +184,7 @@ class PostureCorrectorTrt(ModelTrt):
             elif left_hip_angle > 270: 
                 self.__back_buffer.addPosture(self.__forward)
 
-    def _send_alert(self, alert_type) -> None:
+    def _send_alert(self, alert_type: str) -> None:
         '''
         triggers the alert on the user interface, and store the incorrect posture
         sustained by the user during the 10 seconds of time.

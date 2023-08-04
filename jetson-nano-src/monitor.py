@@ -57,14 +57,15 @@ def main():
         else:
             print('\n' + 'Authentication Error: Incorrect email or password, please try again.' + '\n')
 
-    # creating an instance of the class defined in corrector.py
+    # creating an instance of the PostureCorrector class
+    # after testing and calculating the average fps it turns out to be 17
     user = PostureCorrectorTrt(
         url=url, 
         port=port,
         email=email, 
         password=password,
         camera_position=camera_position, 
-        fps=30, 
+        fps=17, 
         duration=10
     )
     try: 
@@ -114,7 +115,7 @@ def main():
     # exceptions handling
     try:
         upload_photos = user.app.upload_photos() 
-        if upload_photos != "Files uploaded successfully." and upload_photos != "No incorrect postures":
+        if upload_photos != "success" and upload_photos != "No incorrect postures":
             raise PhotosUploadException("The incorrect posture photos captured during the video weren't sent to the app.")
     except PhotosUploadException as e:
         print(f"Error uploading photos: {e}")
@@ -140,6 +141,7 @@ def main():
                 print(f"Error updating database: {e}")
             except Exception as e:
                 print(f"Unexpected error while updating database: {e}")
+
 
 if __name__ == '__main__':
     main()

@@ -8,12 +8,12 @@ class GenericCorrector:
     _euclidian_distance = staticmethod(cpp_functions.euclidean_distance)
     _angle_calculator = staticmethod(cpp_functions.angle_calculator)
 
-    def __init__(self, camera_position: int=1, fps: int=30, duration: int=10):
+    def __init__(self, camera_position: int=1, fps: int=17, duration: int=10):
         self.__forward = b'f'[0] # 102
         self.__upright = b'u'[0] # 117
         self.__reclined = b'r'[0] # 114
         self.__duration = duration
-        self.__num_frames = int(self.__duration * fps/ 2)
+        self.__num_frames = int(self.__duration * fps)
         self.__CAMERA_POSITION = camera_position
         self.__neck_buffer = Buffers.PyNeckCircularBuffer(self.__num_frames)
         self.__back_buffer = Buffers.PyBackCircularBuffer(self.__num_frames)
