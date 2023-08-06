@@ -1,7 +1,7 @@
 # posture_corrector_api
 
 from .movenet_models import ModelTrt, ModelOnnx, ModelTflite
-from .utils import draw_connections, draw_keypoints, authenticate_user 
+from .utils import load_config, draw_connections, draw_keypoints, authenticate_user 
 from .corrector import PostureCorrectorTrt 
 from .post_requests import DjangoAppSession 
 from .test_correctors import TestCorrectorTrt, TestCorrectorOnnx, TestCorrectorTflite
@@ -11,6 +11,7 @@ __all__ = [
            'ModelTrt', 
            'ModelOnnx', 
            'ModelTflite', 
+           'load_config',
            'draw_connections', 
            'draw_keypoints', 
            'authenticate_user', 

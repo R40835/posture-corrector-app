@@ -20,7 +20,7 @@ class PostureCorrectorTrt(ModelTrt):
     _euclidian_distance = staticmethod(cpp_functions.euclidean_distance)
     _angle_calculator = staticmethod(cpp_functions.angle_calculator)
 
-    def __init__(self, url: str, port:str, email: str, password: str, camera_position: int=1, fps: int=17, duration: int=10):
+    def __init__(self, host: str, port:str, email: str, password: str, camera_position: int=1, fps: int=17, duration: int=10):
         super(PostureCorrectorTrt, self).__init__()
         self.__frame = None
         self.__photos_counter = 0
@@ -33,7 +33,7 @@ class PostureCorrectorTrt(ModelTrt):
         self.__neck_buffer = Buffers.PyNeckCircularBuffer(self.__num_frames)
         self.__back_buffer = Buffers.PyBackCircularBuffer(self.__num_frames)
         self.__app = DjangoAppSession(
-            url=url,
+            host=host,
             port=port,
             email=email,
             password=password 

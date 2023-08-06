@@ -1,0 +1,5 @@
+# host: replace "192.168.1.100" with the address where you're hosting your app.
+# port: replace "8080" with the port where your app is listening.
+server:
+  host: 192.168.1.100
+  port: 8080

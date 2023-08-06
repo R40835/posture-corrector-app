@@ -1,19 +1,24 @@
 import numpy as np
 import requests
+import yaml 
 import cv2
 
 
-# utility functions to draw the key points detected by 
-# the moveNet model and the connection between them
-def authenticate_user(url: str, port:str, email: str, password: str) -> str:
+def load_config(file_path: str) -> None:
+    with open(file_path, 'r') as config_file:
+        config = yaml.safe_load(config_file)
+    return config
+
+
+def authenticate_user(host: str, port:str, email: str, password: str) -> str:
     '''
     checks if the user credential are correct before launching the program
     
-    :param url: app url
+    :param host: app host
     :param email: user email
     :param password: user password
     '''
-    url = 'http://' + url + ':' + port + '/main/identify-camera/'
+    url = 'http://' + host + ':' + port + '/main/identify-camera/'
     data = {
         'email': email,
         'password': password,

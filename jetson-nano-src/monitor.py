@@ -1,5 +1,6 @@
 from posture_corrector_api import (
     PostureCorrectorTrt,
+    load_config,
     draw_connections, 
     draw_keypoints, 
     authenticate_user, 
@@ -22,11 +23,9 @@ def main():
                 2 ---> [frontal]\n \
                 3 ---> [lateral left]\n \
                 \n'
-    # pass in the url the ip address used to host the django app 
-    # (before running this script run the django app server; assign the port on which the server is listening)
-    url = ''
-    # assign port
-    port = ''
+    config = load_config('config.yaml')
+    host = str(config['server']['host'])
+    port = str(config['server']['port'])
     email = ''
     password = ''
     camera_position = 0
@@ -34,7 +33,7 @@ def main():
     while 1:
         email = str(input('Enter your email: '))
         password = getpass.getpass(prompt='Enter your password: ')
-        if authenticate_user(url, port, email, password) == 'user identified':
+        if authenticate_user(host, port, email, password) == 'user identified':
             print('\n' + 'Authentication successful' + '\n')
             print(options)
             while 1:
@@ -60,7 +59,7 @@ def main():
     # creating an instance of the PostureCorrector class
     # after testing and calculating the average fps it turns out to be 17
     user = PostureCorrectorTrt(
-        url=url, 
+        host=host, 
         port=port,
         email=email, 
         password=password,

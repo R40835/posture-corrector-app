@@ -6,9 +6,9 @@ import os
 
 
 class DjangoAppSession:
-    def __init__(self, url: str, port: str, email: str, password: str):
+    def __init__(self, host: str, port: str, email: str, password: str):
         self.__port = port
-        self.__url = url 
+        self.__host = host 
         self.__email = email
         self.__password = password
         self.__incorrect_postures = []
@@ -37,7 +37,7 @@ class DjangoAppSession:
         '''sending a notification to the user to straighten up through a post request'''
 
         # django app url
-        url = 'http://' + self.__url + ':'+ self.__port + '/main/my-endpoint/'
+        url = 'http://' + self.__host + ':'+ self.__port + '/main/my-endpoint/'
         data = {
             'email':self.__email,
             'password':self.__password,
@@ -53,7 +53,7 @@ class DjangoAppSession:
         if len(os.listdir(folder_path)) == 0: return "No incorrect postures"
 
         responses = []
-        url = 'http://' + self.__url + ':'+ self.__port + '/main/user-incorrect-postures/'
+        url = 'http://' + self.__host + ':'+ self.__port + '/main/user-incorrect-postures/'
         data = {
             'email': self.__email,
             'password': self.__password
@@ -73,7 +73,7 @@ class DjangoAppSession:
     def update_database(self, end_time: int) -> str:
         '''sends a user's posture data to the django app so that it could be stored in the database'''
 
-        url = 'http://' + self.__url + ':'+ self.__port + '/main/video-data/'
+        url = 'http://' + self.__host + ':'+ self.__port + '/main/video-data/'
         if len(self.__incorrect_postures) == 0:
             self.__incorrect_postures.append('No Incorrect Postures')
         data = {
