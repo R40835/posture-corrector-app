@@ -144,9 +144,9 @@ class PostureCorrectorTrt(ModelTrt):
         nose_hip_dist = left_nose_hip_dist + right_nose_hip_dist
 
         # compare the distances
-        if nose_hip_dist < shoulder_hip_dist:
+        if (nose_hip_dist*0.7) < shoulder_hip_dist:
             self.__back_buffer.addPosture(self.__forward)
-        elif nose_hip_dist > shoulder_hip_dist:
+        else:
             self.__back_buffer.addPosture(self.__upright) 
             
     def _lateral_back_corrector(self) -> None:
