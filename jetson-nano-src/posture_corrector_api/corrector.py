@@ -104,7 +104,7 @@ class PostureCorrectorTrt(ModelTrt):
         left_shoulder_angle = self._angle_calculator(p1=n, p2=ls, p3=rs)
 
         # 325 is the angle threshold 35 flipped
-        if (35 < right_shoulder_angle) & (left_shoulder_angle < 325):
+        if (50 < right_shoulder_angle) & (left_shoulder_angle < 310):
             self.__neck_buffer.addPosture(self.__upright)
         else: 
             self.__neck_buffer.addPosture(self.__forward)        
@@ -118,7 +118,7 @@ class PostureCorrectorTrt(ModelTrt):
         right_shoulder_y = self.parts_coordinates['right_shoulder'][1]
 
         # Compare the y-coordinates to determine if the subject is sat upright
-        # We'll use a range of 10 pixels to allow for some variability in how people sit on chairs
+        # We'll use a range of 8 pixels to allow for some variability in how people sit on chairs
         if (abs(nose_y - left_shoulder_y) < .08) & (abs(nose_y - right_shoulder_y) < .08):
             self.__neck_buffer.addPosture(self.__forward)        
         else:
