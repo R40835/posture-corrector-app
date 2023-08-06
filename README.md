@@ -51,7 +51,12 @@ python manage.py runserver <host-address>:<port>
 1. Write the image into a SDcard following the instruction from nvidia website https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#setup.
 2. Connect the Jetson Nano to the camera module and ensure it is properly configured.
 3. Install TensorRT, numpy, pycuda, and the latest version of OpenCV on the Jetson Nano.
-4. In monitor.py set the url to the address where your hosting your Django app, and the port to the port where the app is listening.
+4. In config.yaml set the host to the address where you're hosting your Django app, and the port to the port where the app is listening.
+```
+server:
+  host: <host-address>
+  port: <port>
+```
 5. Open a terminal and type in the following command:
 ```
 LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1
