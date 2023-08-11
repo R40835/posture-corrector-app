@@ -27,8 +27,7 @@ The Posture Corrector App is a computer vision-based application developed using
 </div>
 
 # Demo
-
-<source src="[https://github.com/R40835/posture-corrector-app/blob/main/demo/real-time alerts demo.mp4](https://github.com/R40835/posture-corrector-app/blob/main/demo/real-time%20alerts%20demo.mp4)" type="video/mp4">
+<img src="https://github.com/R40835/posture-corrector-app/blob/main/assets/demo.gif?raw=true">
 
 # Django App Setup
 1. Install the necessary dependencies and libraries listed in the requirements.txt file using the following command:
