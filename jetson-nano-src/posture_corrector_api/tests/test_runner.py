@@ -51,7 +51,7 @@ def main():
         # Version 1: using the moveNet model in its original form (tflite)
         user =  TestCorrectorTflite(
             camera_position=camera_position,
-            fps=30,
+            fps=2,
             duration=10
         )
 
@@ -59,7 +59,7 @@ def main():
         # Version 2: using the moveNet model optimised to onnx
         user = TestCorrectorOnnx(
             camera_position=camera_position,
-            fps=30,
+            fps=3,
             duration=10
         )
 
@@ -67,7 +67,7 @@ def main():
         # Version 3: using the moveNet Model optimised to trt
         user = TestCorrectorTrt(
             camera_position=camera_position, 
-            fps=17, 
+            fps=19, 
             duration=10
         )     
 

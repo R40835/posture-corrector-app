@@ -64,7 +64,7 @@ def main():
         email=email, 
         password=password,
         camera_position=camera_position, 
-        fps=17, 
+        fps=19,
         duration=10
     )
     try: 

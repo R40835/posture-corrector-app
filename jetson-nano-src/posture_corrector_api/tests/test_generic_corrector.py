@@ -8,7 +8,7 @@ class GenericCorrector:
     _euclidian_distance = staticmethod(cpp_functions.euclidean_distance)
     _angle_calculator = staticmethod(cpp_functions.angle_calculator)
 
-    def __init__(self, camera_position: int=1, fps: int=17, duration: int=10):
+    def __init__(self, camera_position: int=1, fps: int=19, duration: int=10):
         self.__forward = b'f'[0] # 102
         self.__upright = b'u'[0] # 117
         self.__reclined = b'r'[0] # 114
@@ -119,7 +119,7 @@ class GenericCorrector:
         nose_hip_dist = left_nose_hip_dist + right_nose_hip_dist
 
         # compare the distances
-        if nose_hip_dist < shoulder_hip_dist:
+        if (nose_hip_dist*0.7) < shoulder_hip_dist:
             self.__back_buffer.addPosture(self.__forward)
         elif nose_hip_dist > shoulder_hip_dist:
             self.__back_buffer.addPosture(self.__upright) 

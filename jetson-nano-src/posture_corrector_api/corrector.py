@@ -20,7 +20,7 @@ class PostureCorrectorTrt(ModelTrt):
     _euclidian_distance = staticmethod(cpp_functions.euclidean_distance)
     _angle_calculator = staticmethod(cpp_functions.angle_calculator)
 
-    def __init__(self, host: str, port:str, email: str, password: str, camera_position: int=1, fps: int=17, duration: int=10):
+    def __init__(self, host: str, port:str, email: str, password: str, camera_position: int=1, fps: int=19, duration: int=10):
         super(PostureCorrectorTrt, self).__init__()
         self.__frame = None
         self.__photos_counter = 0
@@ -118,8 +118,8 @@ class PostureCorrectorTrt(ModelTrt):
         right_shoulder_y = self.parts_coordinates['right_shoulder'][1]
 
         # Compare the y-coordinates to determine if the subject is sat upright
-        # We'll use a range of 8 pixels to allow for some variability in how people sit on chairs
-        if (abs(nose_y - left_shoulder_y) < .08) & (abs(nose_y - right_shoulder_y) < .08):
+        # We'll use a range of 9 pixels to allow for some variability in how people sit on chairs
+        if (abs(nose_y - left_shoulder_y) < .09) & (abs(nose_y - right_shoulder_y) < .09):
             self.__neck_buffer.addPosture(self.__forward)        
         else:
             self.__neck_buffer.addPosture(self.__upright) 
@@ -214,8 +214,10 @@ class PostureCorrectorTrt(ModelTrt):
             self.__app.incorrect_postures =  "forward-leaning neck"
 
     def _photo(self, frame: np.ndarray) -> None:
-        '''stores the last video frame when the user's posture is incorrect for 10 seconds'''
-
-        # TODO: get photo time and store it along with the incorrect posture TODO
+        '''
+        stores the last video frame when the user's posture is incorrect for 10 seconds
+        
+        :param frame: video frame
+        '''
         cv2.imwrite("incorrect_postures/incorrect_posture_{}.jpg".format(self.__photos_counter), frame)
         self.__photos_counter += 1
