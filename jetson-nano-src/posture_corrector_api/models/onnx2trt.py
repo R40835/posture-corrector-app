@@ -3,7 +3,7 @@ import pycuda.driver as cuda
 import pycuda.autoinit
 import numpy as np 
 
-onnx_path = 'model_th2.onnx'
+onnx_path = 'movenet_v2.onnx'
 
 # set up TensorRT
 TRT_LOGGER = trt.Logger(trt.Logger.WARNING)
