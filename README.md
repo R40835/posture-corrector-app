@@ -29,7 +29,8 @@ The Posture Corrector App is a computer vision-based application developed using
 # Demo
 Following is a short demo that demonstrates the monitoring system in action. The Jetson Nano keeps track of incorrect posture and notifies the user on the web app if the incorrect posture is sustained for 10 seconds. If the incorrect posture doesn't persist for the set duration, the app won't notify the user, assuming that the user is moving. This mechanism has been implemented to provide flexibility and avoid overwhelming the user with alerts.
 <br>
-<img src="https://github.com/R40835/posture-corrector-app/blob/main/assets/demo.gif?raw=true" style="height: 500px; width: 700px;">
+
+https://github.com/user-attachments/assets/c7a2caf4-5607-43ae-ab13-bc243fe2bf79
 
 # Django App Setup
 1. Install the necessary dependencies and libraries listed in the requirements.txt file using the following command:
